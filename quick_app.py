@@ -1,4 +1,5 @@
 from pathlib import Path
+import hmac
 
 import streamlit as st
 
@@ -11,6 +12,33 @@ ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"quick_analysis.db"
 
 st.set_page_config(page_title="台股快速溫度分析",page_icon="🌡️",layout="wide")
+
+
+def require_test_password():
+    """公開測試站的簡易密碼門禁；密碼只存放於 Streamlit Secrets。"""
+    try:
+        expected = str(st.secrets.get("APP_PASSWORD", ""))
+    except Exception:
+        expected = ""
+    if not expected:
+        st.error("網站尚未設定測試密碼，請聯絡管理者。")
+        st.stop()
+    if st.session_state.get("password_authenticated"):
+        return
+
+    st.title("台股快速溫度分析")
+    st.caption("此網站目前為邀請測試版，請輸入測試密碼。")
+    supplied = st.text_input("測試密碼", type="password")
+    if st.button("進入網站", type="primary"):
+        if hmac.compare_digest(supplied, expected):
+            st.session_state["password_authenticated"] = True
+            st.rerun()
+        else:
+            st.error("密碼不正確")
+    st.stop()
+
+
+require_test_password()
 st.markdown("""<style>.block-container{max-width:1050px;padding-top:1.5rem}.hero{padding:1.2rem 1.5rem;border-radius:18px;color:white;background:linear-gradient(125deg,#0f3d3e,#168aad);margin-bottom:1rem}.bar{height:20px;background:#e7edf0;border-radius:12px;overflow:hidden}.bar div{height:100%;background:linear-gradient(90deg,#2b8cbe,#7bccc4,#fdd49e,#ef6548,#b30000)}</style>""",unsafe_allow_html=True)
 st.markdown("""<div class="hero"><h1 style="margin:0">台股快速溫度分析</h1><div>輸入股票代號，自動分析估值、成長要求與短期價格位置</div></div>""",unsafe_allow_html=True)
 

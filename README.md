@@ -15,6 +15,14 @@ py -3 -m streamlit run quick_app.py --server.port 8502
 
 網站執行期間只會在 `data/quick_analysis.db` 建立公開市場資料快取；此資料庫不含個人持倉資料，且已由 `.gitignore` 排除。
 
+公開測試時，請在 Streamlit App settings → Secrets 設定：
+
+```toml
+APP_PASSWORD = "自行設定的測試密碼"
+```
+
+密碼只存放在 Streamlit Secrets，不應提交到 GitHub。
+
 ## 注意事項
 
 - 資料來源為公開市場資料；公開營運前仍須確認來源的使用條款、額度及轉載規定。
