@@ -4,7 +4,7 @@ import hmac
 import streamlit as st
 
 from diagnosis.quick_analysis import analyze_stock
-from diagnosis.interpretation import build_interpretation
+from diagnosis.interpretation import build_interpretation, build_opportunity_risk
 from diagnosis.sources import search_stock_directory, update_finmind_history, update_stock_directory
 from diagnosis.technical import price_position_label, trend_label
 
@@ -99,6 +99,19 @@ if result:
     st.markdown(f'**中期觀察：** {interpretation["medium_term"]}')
     st.markdown(f'**長期考量：** {interpretation["long_term"]}')
     st.caption("以上內容由固定規則依公開數據產生，用於整理觀察重點，不構成買賣建議。")
+    matrix=build_opportunity_risk(result)
+    st.subheader("機會—風險矩陣")
+    m1,m2,m3,m4=st.columns(4)
+    m1.metric("基本面確定性",matrix["certainty"])
+    m2.metric("潛在成長彈性",matrix["elasticity"])
+    m3.metric("估值風險",matrix["valuation_risk"])
+    m4.metric("價格風險",matrix["price_risk"])
+    st.info(f'綜合類型：{matrix["category"]}')
+    with st.expander("查看矩陣判斷依據"):
+        st.markdown(f'- **基本面確定性：** {matrix["certainty_reason"]}')
+        st.markdown(f'- **成長彈性：** {matrix["elasticity_reason"]}')
+        st.markdown(f'- **估值風險：** {matrix["valuation_reason"]}')
+        st.markdown(f'- **價格風險：** {matrix["price_reason"]}')
     if result["valuation_available"]:
         temp=result["valuation_temperature"]
         st.subheader("估值溫度")
