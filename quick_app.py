@@ -4,6 +4,7 @@ import hmac
 import streamlit as st
 
 from diagnosis.quick_analysis import analyze_stock
+from diagnosis.interpretation import build_interpretation
 from diagnosis.sources import search_stock_directory, update_finmind_history, update_stock_directory
 from diagnosis.technical import price_position_label, trend_label
 
@@ -91,6 +92,13 @@ if result:
     identity=f'{result.get("stock_name") or ""}（{result["stock_id"]}）' if result.get("stock_name") else result["stock_id"]
     st.subheader(f'{identity}｜資料日 {result["price_date"]}')
     st.metric("目前股價",f'{result["price"]:,.2f} 元')
+    interpretation=build_interpretation(result)
+    st.subheader("綜合判讀")
+    st.info(interpretation["overall"])
+    st.markdown(f'**短期注意：** {interpretation["short_term"]}')
+    st.markdown(f'**中期觀察：** {interpretation["medium_term"]}')
+    st.markdown(f'**長期考量：** {interpretation["long_term"]}')
+    st.caption("以上內容由固定規則依公開數據產生，用於整理觀察重點，不構成買賣建議。")
     if result["valuation_available"]:
         temp=result["valuation_temperature"]
         st.subheader("估值溫度")
