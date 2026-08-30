@@ -9,6 +9,13 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS prices(
  stock_id TEXT NOT NULL, price_date TEXT NOT NULL, close REAL NOT NULL,
  market TEXT, source TEXT, PRIMARY KEY(stock_id,price_date));
+CREATE TABLE IF NOT EXISTS daily_bars(
+ stock_id TEXT NOT NULL, price_date TEXT NOT NULL,
+ open REAL, high REAL, low REAL, close REAL NOT NULL, volume REAL,
+ source TEXT, PRIMARY KEY(stock_id,price_date));
+CREATE TABLE IF NOT EXISTS stock_directory(
+ stock_id TEXT PRIMARY KEY, stock_name TEXT NOT NULL,
+ market TEXT, industry TEXT, source_date TEXT, updated_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS pe_history(
  stock_id TEXT NOT NULL, value_date TEXT NOT NULL,
  pe REAL, source TEXT, PRIMARY KEY(stock_id,value_date));

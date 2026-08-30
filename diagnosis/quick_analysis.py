@@ -6,7 +6,7 @@ from statistics import median
 from .db import connect
 from .growth import implied_growth_diagnostic, yoy_growths
 from .model import percentile_rank
-from .technical import bollinger_snapshot, price_position_label, trend_label
+from .technical import bollinger_snapshot, price_position_label, technical_diagnostic, trend_label
 
 
 def analyze_stock(db_path, stock_id):
@@ -14,14 +14,23 @@ def analyze_stock(db_path, stock_id):
     if not stock_id:
         raise ValueError("請輸入股票代號")
     con=connect(db_path)
+    directory=con.execute("SELECT stock_name,market,industry FROM stock_directory WHERE stock_id=?",(stock_id,)).fetchone()
     latest=con.execute("SELECT price_date,close FROM prices WHERE stock_id=? AND close>0 ORDER BY price_date DESC LIMIT 1",(stock_id,)).fetchone()
     if not latest:
         con.close(); raise ValueError("尚無價格資料，請先執行更新")
     latest_pe=con.execute("SELECT pe FROM pe_history WHERE stock_id=? AND value_date=? AND pe>0",(stock_id,latest["price_date"])).fetchone()
-    prices=con.execute("SELECT close FROM prices WHERE stock_id=? AND close>0 ORDER BY price_date DESC LIMIT 60",(stock_id,)).fetchall()
+    prices=con.execute("SELECT close FROM prices WHERE stock_id=? AND close>0 ORDER BY price_date DESC LIMIT 260",(stock_id,)).fetchall()
     boll=bollinger_snapshot([r["close"] for r in reversed(prices)])
-    result={"stock_id":stock_id,"price_date":latest["price_date"],"price":float(latest["close"]),
-        "bollinger":boll,"price_label":price_position_label(boll.percent_b) if boll else None,
+    bars=con.execute("""SELECT close,volume FROM daily_bars WHERE stock_id=? AND close>0
+        ORDER BY price_date DESC LIMIT 260""",(stock_id,)).fetchall()
+    bar_values=[{"close":r["close"],"volume":r["volume"]} for r in reversed(bars)]
+    if not bar_values:
+        bar_values=[{"close":r["close"],"volume":None} for r in reversed(prices)]
+    technical=technical_diagnostic(bar_values)
+    result={"stock_id":stock_id,"stock_name":directory["stock_name"] if directory else None,
+        "market":directory["market"] if directory else None,"industry":directory["industry"] if directory else None,
+        "price_date":latest["price_date"],"price":float(latest["close"]),
+        "bollinger":boll,"technical":technical,"price_label":price_position_label(boll.percent_b) if boll else None,
         "trend_label":trend_label(boll.ma_slope) if boll else None,"valuation_available":False}
     if not latest_pe:
         result["valuation_note"]="最新交易日沒有有效PE，可能是最近四季EPS非正數或資料來源未提供。"

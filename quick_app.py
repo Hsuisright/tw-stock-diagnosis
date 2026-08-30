@@ -4,7 +4,7 @@ import hmac
 import streamlit as st
 
 from diagnosis.quick_analysis import analyze_stock
-from diagnosis.sources import update_finmind_history
+from diagnosis.sources import search_stock_directory, update_finmind_history, update_stock_directory
 from diagnosis.technical import price_position_label, trend_label
 
 
@@ -40,27 +40,56 @@ def require_test_password():
 
 require_test_password()
 st.markdown("""<style>.block-container{max-width:1050px;padding-top:1.5rem}.hero{padding:1.2rem 1.5rem;border-radius:18px;color:white;background:linear-gradient(125deg,#0f3d3e,#168aad);margin-bottom:1rem}.bar{height:20px;background:#e7edf0;border-radius:12px;overflow:hidden}.bar div{height:100%;background:linear-gradient(90deg,#2b8cbe,#7bccc4,#fdd49e,#ef6548,#b30000)}</style>""",unsafe_allow_html=True)
-st.markdown("""<div class="hero"><h1 style="margin:0">台股快速溫度分析</h1><div>輸入股票代號，自動分析估值、成長要求與短期價格位置</div></div>""",unsafe_allow_html=True)
+st.markdown("""<div class="hero"><h1 style="margin:0">台股快速溫度分析</h1><div>輸入股票代號或名稱，自動分析估值、成長要求、趨勢、動能與價格型態</div></div>""",unsafe_allow_html=True)
 
 c1,c2=st.columns([3,1])
-stock_id=c1.text_input("股票代號",value="2330",placeholder="例如：2330")
-run=c2.button("更新並分析",type="primary",width="stretch")
+stock_id=c1.text_input("股票代號或名稱",value="2330",placeholder="例如：2330、台積電或台積")
+run=c2.button("搜尋並分析",type="primary",width="stretch")
 st.caption("只使用公開市場資料，不需要帳戶、股數或持倉成本。")
 
+def run_analysis(sid,label=None):
+    with st.spinner(f"正在更新 {label or sid} 的歷史價格與PE…"):
+        counts,errors=update_finmind_history(DB,sid,"2019-01-01")
+    if errors: st.warning("；".join(errors))
+    try:
+        st.session_state["analysis"]=analyze_stock(DB,sid)
+        st.session_state.pop("search_matches",None)
+    except ValueError as exc: st.error(str(exc))
+
+
 if run:
-    sid=stock_id.strip().upper()
-    if not sid:
-        st.error("請輸入股票代號")
+    query=stock_id.strip()
+    if not query:
+        st.error("請輸入股票代號或名稱")
     else:
-        with st.spinner(f"正在更新 {sid} 的歷史價格與PE…"):
-            counts,errors=update_finmind_history(DB,sid,"2019-01-01")
-        if errors: st.warning("；".join(errors))
-        try: st.session_state["analysis"]=analyze_stock(DB,sid)
-        except ValueError as exc: st.error(str(exc))
+        with st.spinner("正在更新公司名稱目錄…"):
+            _,directory_errors=update_stock_directory(DB)
+        if directory_errors: st.warning("；".join(directory_errors))
+        matches=search_stock_directory(DB,query)
+        if not matches and query.isdigit():
+            run_analysis(query.upper())
+        elif not matches:
+            st.error(f"找不到「{query}」對應的台股公司，請改用完整名稱或股票代號。")
+        elif len(matches)==1:
+            match=matches[0]
+            run_analysis(match["stock_id"],f'{match["stock_name"]}（{match["stock_id"]}）')
+        else:
+            st.session_state["search_matches"]=matches
+            st.session_state.pop("analysis",None)
+
+pending=st.session_state.get("search_matches")
+if pending:
+    st.info(f"找到 {len(pending)} 個可能結果，請選擇要分析的股票。")
+    labels={f'{x["stock_name"]}（{x["stock_id"]}）｜{x.get("market") or "市場未標示"}':x for x in pending}
+    selected=st.selectbox("搜尋結果",list(labels))
+    if st.button("分析選取股票",type="primary"):
+        match=labels[selected]
+        run_analysis(match["stock_id"],selected)
 
 result=st.session_state.get("analysis")
 if result:
-    st.subheader(f'{result["stock_id"]}｜資料日 {result["price_date"]}')
+    identity=f'{result.get("stock_name") or ""}（{result["stock_id"]}）' if result.get("stock_name") else result["stock_id"]
+    st.subheader(f'{identity}｜資料日 {result["price_date"]}')
     st.metric("目前股價",f'{result["price"]:,.2f} 元')
     if result["valuation_available"]:
         temp=result["valuation_temperature"]
@@ -102,4 +131,42 @@ if result:
         p2.metric("布林位階",price_position_label(b.percent_b))
         p3.metric("均線方向",trend_label(b.ma_slope))
         p4.metric("通道寬度",f"{b.bandwidth:.1f}%")
+    t=result.get("technical")
+    if t:
+        st.subheader("技術診斷")
+        st.info(t.summary)
+        t1,t2,t3,t4=st.columns(4)
+        t1.metric("短線",t.short_state)
+        t2.metric("中期",t.medium_state)
+        t3.metric("長期",t.long_state)
+        t4.metric("波動風險",t.risk_state)
+
+        st.markdown("#### 趨勢與動能")
+        rows=[]
+        for label,avg,momentum in (("20日",t.ma20,t.momentum20),("60日",t.ma60,t.momentum60),
+                                   ("120日",t.ma120,t.momentum120),("240日",t.ma240,None)):
+            rows.append({"週期":label,"均線":f"{avg:.2f}" if avg is not None else "—",
+                         "動能":f"{momentum:+.1%}" if momentum is not None else "—"})
+        st.table(rows)
+
+        s1,s2,s3=st.columns(3)
+        s1.metric("型態",t.pattern_state)
+        s2.metric("量價",t.volume_state, f"量比 {t.volume_ratio:.2f}倍" if t.volume_ratio is not None else None)
+        s3.metric("60日年化波動",f"{t.volatility60:.1%}" if t.volatility60 is not None else "—")
+        if t.range20_high is not None:
+            st.caption(f"20日觀察區間：{t.range20_low:.2f}～{t.range20_high:.2f}元｜60日觀察區間：{t.range60_low:.2f}～{t.range60_high:.2f}元。這些是結構觀察線，不是自動買賣價。")
+
+        bull,bear=st.columns(2)
+        with bull:
+            st.markdown("#### 多方證據")
+            if t.bullish_evidence:
+                for item in t.bullish_evidence: st.success(f"＋ {item}")
+            else: st.caption("目前沒有明確多方證據")
+        with bear:
+            st.markdown("#### 空方／風險證據")
+            if t.bearish_evidence:
+                for item in t.bearish_evidence: st.warning(f"－ {item}")
+            else: st.caption("目前沒有明確空方證據")
+        if t.neutral_evidence:
+            st.caption("中性／待確認："+"；".join(t.neutral_evidence))
     st.caption("本頁為歷史比較與市場期待診斷，不構成投資建議。")

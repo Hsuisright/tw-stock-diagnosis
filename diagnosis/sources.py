@@ -45,6 +45,11 @@ def update_finmind_history(db_path, stock_id, start_date="2016-01-01", token=Non
                 px=_num(x.get("close")); d=x.get("date")
                 if d and px and px>0:
                     con.execute("INSERT OR REPLACE INTO prices VALUES(?,?,?,?,?)",(stock_id,d,px,"FinMind","https://api.finmindtrade.com/api/v4/data"));counts["price"]+=1
+                    con.execute("""INSERT OR REPLACE INTO daily_bars
+                        (stock_id,price_date,open,high,low,close,volume,source)
+                        VALUES(?,?,?,?,?,?,?,?)""",(
+                            stock_id,d,_num(x.get("open")),_num(x.get("max")),
+                            _num(x.get("min")),px,_num(x.get("Trading_Volume")),"FinMind"))
         except Exception as e:errors.append(f"價格：{e}")
         try:
             for x in query("TaiwanStockPER"):
@@ -53,3 +58,49 @@ def update_finmind_history(db_path, stock_id, start_date="2016-01-01", token=Non
                     con.execute("INSERT OR REPLACE INTO pe_history VALUES(?,?,?,?)",(stock_id,d,pe,"FinMind"));counts["pe"]+=1
         except Exception as e:errors.append(f"P/E：{e}")
     return counts,errors
+
+
+def update_stock_directory(db_path, token=None):
+    """更新台股代號與公司名稱目錄，供代號、全名及部分名稱搜尋。"""
+    token=token or os.getenv("FINMIND_TOKEN","")
+    q={"dataset":"TaiwanStockInfo"}
+    if token:q["token"]=token
+    url="https://api.finmindtrade.com/api/v4/data?"+urllib.parse.urlencode(q)
+    con=connect(db_path); updated=0
+    try:
+        rows=_get(url).get("data",[])
+        latest={}
+        for x in rows:
+            stock_id=str(x.get("stock_id") or "").strip()
+            stock_name=str(x.get("stock_name") or "").strip()
+            if not stock_id or not stock_name:continue
+            previous=latest.get(stock_id)
+            if previous is None or str(x.get("date") or "")>=str(previous.get("date") or ""):
+                latest[stock_id]=x
+        now=datetime.now().isoformat(timespec="seconds")
+        with con:
+            for stock_id,x in latest.items():
+                con.execute("""INSERT OR REPLACE INTO stock_directory
+                    (stock_id,stock_name,market,industry,source_date,updated_at)
+                    VALUES(?,?,?,?,?,?)""",(stock_id,str(x.get("stock_name") or "").strip(),
+                        x.get("type"),x.get("industry_category"),x.get("date"),now))
+                updated+=1
+        return updated,[]
+    except Exception as exc:
+        return 0,[f"公司名稱目錄：{exc}"]
+    finally:
+        con.close()
+
+
+def search_stock_directory(db_path, query, limit=20):
+    text=str(query or "").strip()
+    if not text:return []
+    con=connect(db_path)
+    exact=con.execute("""SELECT stock_id,stock_name,market,industry FROM stock_directory
+        WHERE stock_id=? OR stock_name=? ORDER BY stock_id LIMIT ?""",(text,text,limit)).fetchall()
+    rows=exact or con.execute("""SELECT stock_id,stock_name,market,industry FROM stock_directory
+        WHERE stock_id LIKE ? OR stock_name LIKE ?
+        ORDER BY CASE WHEN stock_name LIKE ? THEN 0 ELSE 1 END, LENGTH(stock_name),stock_id LIMIT ?""",
+        (text+"%","%"+text+"%",text+"%",limit)).fetchall()
+    result=[dict(row) for row in rows]
+    con.close();return result
