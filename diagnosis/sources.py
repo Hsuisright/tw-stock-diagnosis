@@ -31,7 +31,7 @@ def update_market(db_path):
             except Exception as e: errors.append(f"{market}: {e}")
     return updated,errors
 
-def update_finmind_history(db_path, stock_id, start_date="2016-01-01", token=None):
+def update_finmind_history(db_path, stock_id, start_date="2016-01-01", token=None, include_pe=True):
     """更新單一股票歷史價格與P/E；Token可由FINMIND_TOKEN環境變數提供。"""
     token=token or os.getenv("FINMIND_TOKEN","")
     con=connect(db_path); counts={"price":0,"pe":0}; errors=[]
@@ -51,12 +51,13 @@ def update_finmind_history(db_path, stock_id, start_date="2016-01-01", token=Non
                             stock_id,d,_num(x.get("open")),_num(x.get("max")),
                             _num(x.get("min")),px,_num(x.get("Trading_Volume")),"FinMind"))
         except Exception as e:errors.append(f"價格：{e}")
-        try:
-            for x in query("TaiwanStockPER"):
-                pe=_num(x.get("PER")); d=x.get("date")
-                if d and pe and pe>0:
-                    con.execute("INSERT OR REPLACE INTO pe_history VALUES(?,?,?,?)",(stock_id,d,pe,"FinMind"));counts["pe"]+=1
-        except Exception as e:errors.append(f"P/E：{e}")
+        if include_pe:
+            try:
+                for x in query("TaiwanStockPER"):
+                    pe=_num(x.get("PER")); d=x.get("date")
+                    if d and pe and pe>0:
+                        con.execute("INSERT OR REPLACE INTO pe_history VALUES(?,?,?,?)",(stock_id,d,pe,"FinMind"));counts["pe"]+=1
+            except Exception as e:errors.append(f"P/E：{e}")
     return counts,errors
 
 

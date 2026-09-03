@@ -1,6 +1,9 @@
 from pathlib import Path
 import hmac
 
+import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import streamlit as st
 
 from diagnosis.quick_analysis import analyze_stock
@@ -40,7 +43,7 @@ def require_test_password():
 
 
 require_test_password()
-st.markdown("""<style>.block-container{max-width:1050px;padding-top:1.5rem}.hero{padding:1.2rem 1.5rem;border-radius:18px;color:white;background:linear-gradient(125deg,#0f3d3e,#168aad);margin-bottom:1rem}.bar{height:20px;background:#e7edf0;border-radius:12px;overflow:hidden}.bar div{height:100%;background:linear-gradient(90deg,#2b8cbe,#7bccc4,#fdd49e,#ef6548,#b30000)}</style>""",unsafe_allow_html=True)
+st.markdown("""<style>.block-container{max-width:1050px;padding-top:1.5rem}.hero{padding:1.2rem 1.5rem;border-radius:18px;color:white;background:linear-gradient(125deg,#0f3d3e,#168aad);margin-bottom:1rem}.bar{height:20px;background:#e7edf0;border-radius:12px;overflow:hidden}.bar div{height:100%;background:linear-gradient(90deg,#2b8cbe,#7bccc4,#fdd49e,#ef6548,#b30000)}.stage-track{display:grid;grid-template-columns:repeat(6,1fr);gap:.35rem;margin:.4rem 0 1rem}.stage{padding:.55rem .25rem;text-align:center;background:#e7edf0;border-radius:.45rem;font-size:.85rem}.stage.active{background:#168aad;color:white;font-weight:700}@media(max-width:700px){.stage-track{grid-template-columns:repeat(3,1fr)}}</style>""",unsafe_allow_html=True)
 st.markdown("""<div class="hero"><h1 style="margin:0">台股快速溫度分析</h1><div>輸入股票代號或名稱，自動分析估值、成長要求、趨勢、動能與價格型態</div></div>""",unsafe_allow_html=True)
 
 c1,c2=st.columns([3,1])
@@ -51,6 +54,8 @@ st.caption("只使用公開市場資料，不需要帳戶、股數或持倉成�
 def run_analysis(sid,label=None):
     with st.spinner(f"正在更新 {label or sid} 的歷史價格與PE…"):
         counts,errors=update_finmind_history(DB,sid,"2019-01-01")
+        _,benchmark_errors=update_finmind_history(DB,"0050","2019-01-01",include_pe=False)
+        errors.extend(benchmark_errors)
     if errors: st.warning("；".join(errors))
     try:
         st.session_state["analysis"]=analyze_stock(DB,sid)
@@ -92,6 +97,55 @@ if result:
     identity=f'{result.get("stock_name") or ""}（{result["stock_id"]}）' if result.get("stock_name") else result["stock_id"]
     st.subheader(f'{identity}｜資料日 {result["price_date"]}')
     st.metric("目前股價",f'{result["price"]:,.2f} 元')
+    reversal=result.get("reversal")
+    if reversal:
+        stages=["弱勢延續","超跌觀察","初步止跌","反折形成","反折確認","強勢延伸"]
+        active=stages.index(reversal.stage) if reversal.stage in stages else 0
+        stage_html="".join(f'<div class="stage {"active" if i==active else ""}">{name}</div>' for i,name in enumerate(stages))
+        st.subheader("反折診斷")
+        st.markdown(f'<div class="stage-track">{stage_html}</div>',unsafe_allow_html=True)
+        r1,r2,r3,r4=st.columns(4)
+        history=result.get("reversal_history") or []
+        delta=reversal.score-history[-6].score if len(history)>=6 else None
+        r1.metric("TRS反折分數",f"{reversal.score}/100",f"近5日 {delta:+d}" if delta is not None else None)
+        r2.metric("目前階段",reversal.stage)
+        r3.metric("確認價",f"{reversal.confirmation_price:.2f}元" if reversal.confirmation_price else "—",
+                  f"距離 {(reversal.confirmation_price/result['price']-1):+.1%}" if reversal.confirmation_price else None)
+        r4.metric("失敗價",f"{reversal.failure_price:.2f}元" if reversal.failure_price else "—",
+                  f"距離 {(reversal.failure_price/result['price']-1):+.1%}" if reversal.failure_price else None)
+        st.caption("TRS衡量由弱轉強的證據完整度；高分不等於適合追價。相對強弱以0050作為大盤代理。")
+        score_cols=st.columns(6)
+        score_items=(("趨勢",reversal.trend_score,20),("動能",reversal.momentum_score,20),
+                     ("量價",reversal.volume_score,15),("相對強弱",reversal.relative_score,15),
+                     ("結構",reversal.structure_score,20),("型態",reversal.pattern_score,10))
+        for col,(label,value,total) in zip(score_cols,score_items): col.metric(label,f"{value}/{total}")
+        with st.expander("查看反折證據與未確認條件"):
+            e1,e2=st.columns(2)
+            with e1:
+                st.markdown("**已成立證據**")
+                for item in reversal.evidence: st.success(f"＋ {item}")
+            with e2:
+                st.markdown("**尚未確認**")
+                for item in reversal.pending: st.warning(f"－ {item}")
+        bars=pd.DataFrame(result.get("bars") or []).tail(120)
+        if not bars.empty:
+            bars["date"]=pd.to_datetime(bars["date"])
+            fig=make_subplots(rows=2,cols=1,shared_xaxes=True,vertical_spacing=.04,row_heights=[.75,.25])
+            fig.add_trace(go.Candlestick(x=bars["date"],open=bars["open"],high=bars["high"],low=bars["low"],close=bars["close"],name="K線"),row=1,col=1)
+            for period in (5,10,20,60):
+                fig.add_trace(go.Scatter(x=bars["date"],y=bars["close"].rolling(period).mean(),name=f"MA{period}",line={"width":1.4}),row=1,col=1)
+            if reversal.confirmation_price: fig.add_hline(y=reversal.confirmation_price,line_dash="dash",annotation_text="確認價",row=1,col=1)
+            if reversal.failure_price: fig.add_hline(y=reversal.failure_price,line_dash="dot",annotation_text="失敗價",row=1,col=1)
+            fig.add_trace(go.Bar(x=bars["date"],y=bars["volume"],name="成交量",marker_color="#7f8c8d"),row=2,col=1)
+            fig.update_layout(height=610,margin={"l":10,"r":10,"t":35,"b":10},xaxis_rangeslider_visible=False,hovermode="x unified",legend_orientation="h",title="價格結構、均線與關鍵價位")
+            st.plotly_chart(fig,width="stretch")
+        if history:
+            trs=pd.DataFrame({"日期":[x.date for x in history],"TRS":[x.score for x in history]})
+            trs_fig=go.Figure(go.Scatter(x=trs["日期"],y=trs["TRS"],mode="lines",name="TRS",line={"width":3}))
+            for y in (25,40,55,70,85): trs_fig.add_hline(y=y,line_width=1,line_dash="dot")
+            trs_fig.update_layout(height=300,margin={"l":10,"r":10,"t":35,"b":10},yaxis={"range":[0,100],"title":"TRS"},title="TRS歷史變化")
+            st.plotly_chart(trs_fig,width="stretch")
+
     interpretation=build_interpretation(result)
     st.subheader("綜合判讀")
     st.info(interpretation["overall"])

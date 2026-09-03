@@ -7,6 +7,7 @@ from .db import connect
 from .growth import implied_growth_diagnostic, yoy_growths
 from .model import percentile_rank
 from .technical import bollinger_snapshot, price_position_label, technical_diagnostic, trend_label
+from .reversal import reversal_history
 
 
 def analyze_stock(db_path, stock_id):
@@ -21,16 +22,21 @@ def analyze_stock(db_path, stock_id):
     latest_pe=con.execute("SELECT pe FROM pe_history WHERE stock_id=? AND value_date=? AND pe>0",(stock_id,latest["price_date"])).fetchone()
     prices=con.execute("SELECT close FROM prices WHERE stock_id=? AND close>0 ORDER BY price_date DESC LIMIT 260",(stock_id,)).fetchall()
     boll=bollinger_snapshot([r["close"] for r in reversed(prices)])
-    bars=con.execute("""SELECT close,volume FROM daily_bars WHERE stock_id=? AND close>0
+    bars=con.execute("""SELECT price_date AS date,open,high,low,close,volume FROM daily_bars WHERE stock_id=? AND close>0
         ORDER BY price_date DESC LIMIT 260""",(stock_id,)).fetchall()
-    bar_values=[{"close":r["close"],"volume":r["volume"]} for r in reversed(bars)]
+    bar_values=[dict(r) for r in reversed(bars)]
     if not bar_values:
         bar_values=[{"close":r["close"],"volume":None} for r in reversed(prices)]
     technical=technical_diagnostic(bar_values)
+    benchmark=con.execute("""SELECT price_date AS date,close FROM daily_bars WHERE stock_id='0050' AND close>0
+        ORDER BY price_date DESC LIMIT 260""").fetchall()
+    reversals=reversal_history(bar_values,[dict(r) for r in reversed(benchmark)])
     result={"stock_id":stock_id,"stock_name":directory["stock_name"] if directory else None,
         "market":directory["market"] if directory else None,"industry":directory["industry"] if directory else None,
         "price_date":latest["price_date"],"price":float(latest["close"]),
-        "bollinger":boll,"technical":technical,"price_label":price_position_label(boll.percent_b) if boll else None,
+        "bollinger":boll,"technical":technical,"reversal":reversals[-1] if reversals else None,
+        "reversal_history":reversals,"bars":bar_values,
+        "price_label":price_position_label(boll.percent_b) if boll else None,
         "trend_label":trend_label(boll.ma_slope) if boll else None,"valuation_available":False}
     if not latest_pe:
         result["valuation_note"]="最新交易日沒有有效PE，可能是最近四季EPS非正數或資料來源未提供。"
