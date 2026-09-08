@@ -20,13 +20,13 @@ def analyze_stock(db_path, stock_id):
     if not latest:
         con.close(); raise ValueError("尚無價格資料，請先執行更新")
     latest_pe=con.execute("SELECT pe FROM pe_history WHERE stock_id=? AND value_date=? AND pe>0",(stock_id,latest["price_date"])).fetchone()
-    prices=con.execute("SELECT close FROM prices WHERE stock_id=? AND close>0 ORDER BY price_date DESC LIMIT 260",(stock_id,)).fetchall()
+    prices=con.execute("SELECT price_date AS date,close FROM prices WHERE stock_id=? AND close>0 ORDER BY price_date DESC LIMIT 260",(stock_id,)).fetchall()
     boll=bollinger_snapshot([r["close"] for r in reversed(prices)])
     bars=con.execute("""SELECT price_date AS date,open,high,low,close,volume FROM daily_bars WHERE stock_id=? AND close>0
         ORDER BY price_date DESC LIMIT 260""",(stock_id,)).fetchall()
     bar_values=[dict(r) for r in reversed(bars)]
     if not bar_values:
-        bar_values=[{"close":r["close"],"volume":None} for r in reversed(prices)]
+        bar_values=[{"date":r["date"],"close":r["close"],"volume":None} for r in reversed(prices)]
     technical=technical_diagnostic(bar_values)
     benchmark=con.execute("""SELECT price_date AS date,close FROM daily_bars WHERE stock_id='0050' AND close>0
         ORDER BY price_date DESC LIMIT 260""").fetchall()

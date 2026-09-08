@@ -77,57 +77,23 @@ def build_interpretation(result):
 
 
 def build_opportunity_risk(result):
-    """以現有市場資料產生定性機會—風險矩陣，不假設精確成功率。"""
-    technical = result.get("technical")
-    growth = result.get("growth")
-    valuation_available = bool(result.get("valuation_available"))
-    if valuation_available and result.get("current_eps", 0) > 0:
-        sample_count = getattr(growth, "sample_count", 0) if growth else 0
-        certainty = "中高" if sample_count >= 12 else "中"
-        certainty_reason = "目前EPS為正，且具備可比較的歷史P/E與EPS樣本"
-    else:
-        certainty = "偏低／待驗證"
-        certainty_reason = "目前缺少有效P/E，常見原因是近四季EPS非正數或資料不足"
-    if growth and growth.required_growth_1y <= 0:
-        elasticity = "中"
-        elasticity_reason = "現有EPS對正常P/E參考價仍有緩衝，股價未要求額外成長"
-    elif growth and growth.historical_median is not None:
-        if growth.required_cagr_3y <= growth.historical_median:
-            elasticity = "中高"
-            elasticity_reason = "三年隱含成長要求未高於歷史EPS成長中位數"
-        else:
-            elasticity = "高期待／低容錯"
-            elasticity_reason = "股價要求的成長高於歷史EPS成長中位數，上行依賴持續超預期"
-    else:
-        elasticity = "高但未驗證" if technical and "偏多" in technical.medium_state else "待驗證"
-        elasticity_reason = "缺少正EPS估值基準，只能確認價格趨勢，無法驗證獲利上行空間"
-    if valuation_available:
-        temperature = float(result.get("valuation_temperature", 50))
-        valuation_risk = "高" if temperature >= 80 else "中高" if temperature >= 60 else "偏低" if temperature <= 20 else "中"
-        valuation_reason = f"目前P/E位於近年歷史約第{temperature:.0f}百分位"
-    else:
-        valuation_risk = "高／不可量化"
-        valuation_reason = "負EPS或P/E資料不足，無法用傳統本益比建立估值安全邊際"
-    volatility = technical.volatility60 if technical else None
-    percent_b = result.get("bollinger").percent_b if result.get("bollinger") else None
-    if volatility is None:
-        price_risk = "待驗證"; price_reason = "價格樣本不足"
-    elif volatility >= .5 or (percent_b is not None and (percent_b >= 90 or percent_b <= 10)):
-        price_risk = "高"
-        price_reason = f"60日年化波動率約{volatility:.1%}" + ("，且價格接近通道極端" if percent_b is not None and (percent_b >= 90 or percent_b <= 10) else "")
-    elif volatility >= .3 or (percent_b is not None and (percent_b >= 80 or percent_b <= 20)):
-        price_risk = "中高"; price_reason = f"60日年化波動率約{volatility:.1%}，價格位階亦需留意"
-    else:
-        price_risk = "中低"; price_reason = f"60日年化波動率約{volatility:.1%}，價格未處通道極端"
-    if not valuation_available:
-        category = "轉機／選擇權型"
-    elif valuation_risk == "高" and certainty in ("中高", "中"):
-        category = "高成長、高估值型"
-    elif certainty == "中高" and valuation_risk in ("偏低", "中"):
-        category = "基本面相對穩健型"
-    else:
-        category = "等待更多確認"
-    return {"certainty": certainty, "certainty_reason": certainty_reason,
-            "elasticity": elasticity, "elasticity_reason": elasticity_reason,
-            "valuation_risk": valuation_risk, "valuation_reason": valuation_reason,
-            "price_risk": price_risk, "price_reason": price_reason, "category": category}
+    """市場資料僅支持估值比較，不能推斷財務品質或未來上漲空間。"""
+    t = result.get("technical")
+    available = bool(result.get("valuation_available"))
+    certainty = "可比較" if available else "不足"
+    certainty_reason = "有效P/E與歷史估值可比較；EPS由股價÷P/E推算，未完成財報品質驗證。" if available else result.get("valuation_note", "缺少有效P/E或歷史樣本；不能據此認定虧損或轉機。")
+    elasticity = "待驗證"
+    elasticity_reason = "尚未接入完整季度財報與未來營運情境，無法評估上漲空間；隱含EPS要求不是成長預測。"
+    temperature = result.get("valuation_temperature")
+    valuation_risk = ("高" if temperature >= 80 else "中高" if temperature >= 60 else "偏低" if temperature <= 20 else "中") if available else "無法評估"
+    valuation_reason = f"目前P/E位於歷史第{temperature:.0f}百分位；歷史中位數不是保證合理價。" if available else "估值缺漏不等同高風險，需補資料或採適用的替代估值。"
+    vol = t.volatility60 if t else None
+    b = result.get("bollinger")
+    extreme = b is not None and (b.percent_b >= 90 or b.percent_b <= 10)
+    price_risk = "待驗證" if vol is None else "高" if vol >= .5 or extreme else "中高" if vol >= .3 else "中低"
+    price_reason = "價格樣本不足" if vol is None else f"60日年化波動率{vol:.1%}" + ("，布林位置接近極端。" if extreme else "；僅反映歷史價格風險。")
+    category = "估值待補資料" if not available else "歷史估值偏高" if temperature >= 80 else "歷史估值中低區"
+    return dict(certainty=certainty, certainty_reason=certainty_reason,
+                elasticity=elasticity, elasticity_reason=elasticity_reason,
+                valuation_risk=valuation_risk, valuation_reason=valuation_reason,
+                price_risk=price_risk, price_reason=price_reason, category=category)
