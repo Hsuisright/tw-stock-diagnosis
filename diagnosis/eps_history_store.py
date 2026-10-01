@@ -20,6 +20,7 @@ import urllib.request
 URL = "https://api.finmindtrade.com/api/v4/data"
 SOURCE = "FinMind:TaiwanStockFinancialStatements"
 QUALIFICATION = "CURRENT_VINTAGE_PROVIDER_REPORTED_BASIC_EPS"
+SEED_SCHEMA_VERSION = 1
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS eps_quarters (
   ticker TEXT NOT NULL, fiscal_year INTEGER NOT NULL, quarter INTEGER NOT NULL,
@@ -152,6 +153,53 @@ def refresh(path: Path, ticker: str, start_date="2005-01-01") -> dict:
     return {"ticker": ticker, "count": len(rows), "first_period": rows[0]["period_end"],
             "last_period": rows[-1]["period_end"], "eps_basis": "basic", "qualification": QUALIFICATION,
             "share_basis_event_count": len(events)}
+
+
+def hydrate_from_seed(cache_path: Path, seed_path: Path, ticker: str) -> bool:
+    """Load a public EPS seed only when it passes the same row validation.
+
+    The seed is a portable cache, not a separate financial-data model.  It
+    contains reported EPS and known share-basis events only; it cannot invent
+    missing quarters or replace the live FinMind refresh for an unseeded name.
+    """
+    if not seed_path.exists():
+        return False
+    try:
+        payload = json.loads(seed_path.read_text(encoding="utf-8"))
+        if payload.get("schema_version") != SEED_SCHEMA_VERSION:
+            return False
+        item = payload.get("tickers", {}).get(str(ticker))
+        if not isinstance(item, dict):
+            return False
+        fetched_at = str(payload.get("generated_at") or "seed")
+        version = str(payload.get("version") or "seed")
+        rows = normalize_finmind_eps(item.get("quarters", []), str(ticker), fetched_at, version)
+        if not rows:
+            return False
+        raw_events = item.get("basis_events", [])
+        events = []
+        for event in raw_events:
+            date = str(event.get("event_date") or "")
+            if not date or not event.get("event_type"):
+                return False
+            events.append(dict(ticker=str(ticker), event_date=date, event_type=str(event["event_type"]),
+                source=str(event.get("source") or "FinMind:seed"),
+                source_reference=str(event.get("source_reference") or URL), fetched_at=fetched_at))
+    except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
+        return False
+    with closing(_connect(cache_path)) as con:
+        with con:
+            con.execute("DELETE FROM eps_quarters WHERE ticker=?", (ticker,))
+            con.executemany("""INSERT INTO eps_quarters
+                (ticker,fiscal_year,quarter,period_end,eps,eps_basis,consolidated,source,qualification,
+                 original_field,source_reference,source_fact_id,fetched_at,version)
+                VALUES (:ticker,:fiscal_year,:quarter,:period_end,:eps,:eps_basis,:consolidated,:source,:qualification,
+                        :original_field,:source_reference,:source_fact_id,:fetched_at,:version)""", rows)
+            con.execute("DELETE FROM eps_basis_events WHERE ticker=?", (ticker,))
+            con.executemany("""INSERT INTO eps_basis_events
+                (ticker,event_date,event_type,source,source_reference,fetched_at)
+                VALUES (:ticker,:event_date,:event_type,:source,:source_reference,:fetched_at)""", events)
+    return True
 
 
 def load(path: Path, ticker: str, cutoff: str | None = None) -> list[dict]:

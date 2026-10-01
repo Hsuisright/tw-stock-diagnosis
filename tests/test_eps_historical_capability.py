@@ -1,9 +1,10 @@
+import json
 import tempfile
 import unittest
 from contextlib import closing
 from pathlib import Path
 
-from diagnosis.eps_history_store import normalize_finmind_eps, comparable_rows, _connect
+from diagnosis.eps_history_store import comparable_rows, hydrate_from_seed, load, normalize_finmind_eps, _connect
 from diagnosis.eps_historical_capability import base_eps, required_growths, ttm_series, summaries
 
 
@@ -65,6 +66,21 @@ class CapabilityTests(unittest.TestCase):
             records, events=comparable_rows(path,'X')
             self.assertEqual(len(events),1)
             self.assertEqual(records[0]['period_end'],'2020-12-31')
+
+    def test_public_seed_hydrates_only_valid_reported_eps(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            seed = root / 'seed.json'
+            seed.write_text(json.dumps({
+                'schema_version': 1, 'generated_at': '2026-10-02T00:00:00Z', 'version': 'test',
+                'tickers': {'X': {'quarters': [
+                    {'stock_id': 'X', 'type': 'EPS', 'date': '2025-03-31', 'value': 1, 'origin_name': 'EPS'}
+                ], 'basis_events': []}}
+            }), encoding='utf-8')
+            cache = root / 'cache.sqlite3'
+            self.assertTrue(hydrate_from_seed(cache, seed, 'X'))
+            self.assertEqual(load(cache, 'X')[0]['eps'], 1)
+            self.assertFalse(hydrate_from_seed(cache, root / 'missing.json', 'X'))
 
     def test_required_growths_uses_only_actual_ttm_input(self):
         # 2454 example: this function has no Price/PE parameter, so an implied

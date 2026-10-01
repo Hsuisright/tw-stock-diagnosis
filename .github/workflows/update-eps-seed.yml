@@ -1,0 +1,33 @@
+name: Update public EPS seed
+
+on:
+  schedule:
+    - cron: "15 9 * * 1-5"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/update_eps_seed.py"
+      - ".github/workflows/update-eps-seed.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Fetch public quarterly EPS
+        run: python scripts/update_eps_seed.py
+      - name: Commit changed seed
+        run: |
+          if git diff --quiet -- public_data/eps_seed_v1.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public_data/eps_seed_v1.json
+          git commit -m "Update public EPS seed"
+          git push

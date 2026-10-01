@@ -11,7 +11,7 @@ from diagnosis.quick_analysis import analyze_stock
 from diagnosis.reversal_view import render_reversal
 from diagnosis.interpretation import build_interpretation, build_opportunity_risk
 from diagnosis.sources import search_stock_directory, update_finmind_history, update_stock_directory
-from diagnosis.eps_history_store import refresh as refresh_eps_history
+from diagnosis.eps_history_store import hydrate_from_seed, refresh as refresh_eps_history
 from diagnosis.technical import price_position_label, trend_label
 from diagnosis.valuation_requirement_view import fingerprint
 from diagnosis.valuation_v15_view import current_actual_ttm
@@ -20,6 +20,7 @@ from diagnosis.valuation_v15_view import current_actual_ttm
 ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"quick_analysis.db"
 EPS_DB=ROOT/"data"/"eps_history.sqlite3"
+EPS_SEED=ROOT/"public_data"/"eps_seed_v1.json"
 
 st.set_page_config(page_title="台股快速溫度分析",page_icon="🌡️",layout="wide")
 st.markdown('''<style>
@@ -97,7 +98,10 @@ def run_analysis(sid,label=None):
         _,benchmark_errors=update_finmind_history(DB,"0050","2019-01-01",include_pe=False)
         errors.extend(benchmark_errors)
         try:
-            refresh_eps_history(EPS_DB,sid)
+            # Seeded names open immediately from a versioned public cache.
+            # Other names retain the existing live public-source path.
+            if not hydrate_from_seed(EPS_DB, EPS_SEED, sid):
+                refresh_eps_history(EPS_DB,sid)
         except Exception as exc:
             errors.append(f"季度EPS：{exc}")
     if errors: st.warning("；".join(errors))

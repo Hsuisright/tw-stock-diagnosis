@@ -1,0 +1,2552 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-01T18:39:32.533849+00:00",
+  "source": "FinMind public datasets",
+  "tickers": {
+    "2330": {
+      "quarters": [
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2005-03-31",
+          "value": 0.72,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2005-06-30",
+          "value": 0.71,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2005-09-30",
+          "value": 0.99,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2005-12-31",
+          "value": 1.37,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2006-03-31",
+          "value": 1.32,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2006-06-30",
+          "value": 1.26,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2006-09-30",
+          "value": 1.26,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2006-12-31",
+          "value": 1.09,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2007-03-31",
+          "value": 0.73,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2007-06-30",
+          "value": 0.95,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2007-09-30",
+          "value": 1.15,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2007-12-31",
+          "value": 1.31,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2008-03-31",
+          "value": 1.1,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2008-06-30",
+          "value": 1.12,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2008-09-30",
+          "value": 1.14,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2008-12-31",
+          "value": 0.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2009-03-31",
+          "value": 0.06,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2009-06-30",
+          "value": 0.95,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2009-09-30",
+          "value": 1.18,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2009-12-31",
+          "value": 1.26,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2010-03-31",
+          "value": 1.3,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2010-06-30",
+          "value": 1.55,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2010-09-30",
+          "value": 1.82,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2010-12-31",
+          "value": 1.57,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2011-03-31",
+          "value": 1.4,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2011-06-30",
+          "value": 1.39,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2011-09-30",
+          "value": 1.17,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2011-12-31",
+          "value": 1.22,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2012-03-31",
+          "value": 1.29,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2012-06-30",
+          "value": 1.61,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2012-09-30",
+          "value": 1.91,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2012-12-31",
+          "value": 1.6,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2013-03-31",
+          "value": 1.53,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2013-06-30",
+          "value": 2.0,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2013-09-30",
+          "value": 2.0,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2013-12-31",
+          "value": 1.73,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2014-03-31",
+          "value": 1.85,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2014-06-30",
+          "value": 2.3,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2014-09-30",
+          "value": 2.94,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2014-12-31",
+          "value": 3.09,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2015-03-31",
+          "value": 3.05,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2015-06-30",
+          "value": 3.06,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2015-09-30",
+          "value": 2.91,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2015-12-31",
+          "value": 2.81,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2016-03-31",
+          "value": 2.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2016-06-30",
+          "value": 2.8,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2016-09-30",
+          "value": 3.73,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2016-12-31",
+          "value": 3.86,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2017-03-31",
+          "value": 3.38,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2017-06-30",
+          "value": 2.56,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2017-09-30",
+          "value": 3.47,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2017-12-31",
+          "value": 3.83,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2018-03-31",
+          "value": 3.46,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2018-06-30",
+          "value": 2.79,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2018-09-30",
+          "value": 3.44,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2018-12-31",
+          "value": 3.85,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2019-03-31",
+          "value": 2.37,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2019-06-30",
+          "value": 2.57,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2019-09-30",
+          "value": 3.9,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2019-12-31",
+          "value": 4.48,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2020-03-31",
+          "value": 4.51,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2020-06-30",
+          "value": 4.66,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2020-09-30",
+          "value": 5.3,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2020-12-31",
+          "value": 5.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2021-03-31",
+          "value": 5.39,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2021-06-30",
+          "value": 5.18,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2021-09-30",
+          "value": 6.03,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2021-12-31",
+          "value": 6.42,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2022-03-31",
+          "value": 7.82,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2022-06-30",
+          "value": 9.14,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2022-09-30",
+          "value": 10.83,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2022-12-31",
+          "value": 11.41,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2023-03-31",
+          "value": 7.98,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2023-06-30",
+          "value": 7.01,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2023-09-30",
+          "value": 8.14,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2023-12-31",
+          "value": 9.21,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2024-03-31",
+          "value": 8.7,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2024-06-30",
+          "value": 9.56,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2024-09-30",
+          "value": 12.55,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2024-12-31",
+          "value": 14.45,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2025-03-31",
+          "value": 13.95,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2025-06-30",
+          "value": 15.36,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2025-09-30",
+          "value": 17.44,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2025-12-31",
+          "value": 19.51,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2026-03-31",
+          "value": 22.08,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2330",
+          "type": "EPS",
+          "date": "2026-06-30",
+          "value": 27.25,
+          "origin_name": "基本每股盈餘"
+        }
+      ],
+      "basis_events": [
+        {
+          "ticker": "2330",
+          "event_date": "2005-06-13",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2330",
+          "event_date": "2006-06-20",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2330",
+          "event_date": "2007-06-08",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2330",
+          "event_date": "2008-07-16",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        }
+      ]
+    },
+    "2454": {
+      "quarters": [
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2005-03-31",
+          "value": 3.72,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2005-06-30",
+          "value": 5.46,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2005-09-30",
+          "value": 5.94,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2005-12-31",
+          "value": 6.19,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2006-03-31",
+          "value": 6.01,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2006-06-30",
+          "value": 4.95,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2006-09-30",
+          "value": 5.57,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2006-12-31",
+          "value": 6.97,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2007-03-31",
+          "value": 8.15,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2007-06-30",
+          "value": 7.91,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2007-09-30",
+          "value": 10.42,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2007-12-31",
+          "value": 6.11,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2008-03-31",
+          "value": 3.9,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2008-06-30",
+          "value": 4.93,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2008-09-30",
+          "value": 6.48,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2008-12-31",
+          "value": 2.7,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2009-03-31",
+          "value": 6.57,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2009-06-30",
+          "value": 8.58,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2009-09-30",
+          "value": 10.89,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2009-12-31",
+          "value": 8.08,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2010-03-31",
+          "value": 10.29,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2010-06-30",
+          "value": 8.33,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2010-09-30",
+          "value": 6.33,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2010-12-31",
+          "value": 3.49,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2011-03-31",
+          "value": 3.03,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2011-06-30",
+          "value": 3.05,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2011-09-30",
+          "value": 3.73,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2011-12-31",
+          "value": 2.54,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2012-03-31",
+          "value": 2.19,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2012-06-30",
+          "value": 2.95,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2012-09-30",
+          "value": 4.06,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2012-12-31",
+          "value": 3.7,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2013-03-31",
+          "value": 2.79,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2013-06-30",
+          "value": 5.01,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2013-09-30",
+          "value": 6.28,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2013-12-31",
+          "value": 6.43,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2014-03-31",
+          "value": 6.82,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2014-06-30",
+          "value": 8.03,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2014-09-30",
+          "value": 8.51,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2014-12-31",
+          "value": 6.63,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2015-03-31",
+          "value": 4.62,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2015-06-30",
+          "value": 4.06,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2015-09-30",
+          "value": 5.09,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2015-12-31",
+          "value": 2.83,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2016-03-31",
+          "value": 2.79,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2016-06-30",
+          "value": 4.16,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2016-09-30",
+          "value": 4.98,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2016-12-31",
+          "value": 3.23,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2017-03-31",
+          "value": 4.29,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2017-06-30",
+          "value": 1.51,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2017-09-30",
+          "value": 3.26,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2017-12-31",
+          "value": 6.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2018-03-31",
+          "value": 1.69,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2018-06-30",
+          "value": 4.75,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2018-09-30",
+          "value": 4.39,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2018-12-31",
+          "value": 2.42,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2019-03-31",
+          "value": 2.17,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2019-06-30",
+          "value": 4.11,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2019-09-30",
+          "value": 4.38,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2019-12-31",
+          "value": 4.03,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2020-03-31",
+          "value": 3.64,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2020-06-30",
+          "value": 4.58,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2020-09-30",
+          "value": 8.42,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2020-12-31",
+          "value": 9.36,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2021-03-31",
+          "value": 16.21,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2021-06-30",
+          "value": 17.44,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2021-09-30",
+          "value": 17.92,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2021-12-31",
+          "value": 18.99,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2022-03-31",
+          "value": 21.02,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2022-06-30",
+          "value": 22.39,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2022-09-30",
+          "value": 19.54,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2022-12-31",
+          "value": 11.64,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2023-03-31",
+          "value": 10.64,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2023-06-30",
+          "value": 10.07,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2023-09-30",
+          "value": 11.64,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2023-12-31",
+          "value": 16.16,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2024-03-31",
+          "value": 19.85,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2024-06-30",
+          "value": 16.19,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2024-09-30",
+          "value": 15.94,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2024-12-31",
+          "value": 14.94,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2025-03-31",
+          "value": 18.43,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2025-06-30",
+          "value": 17.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2025-09-30",
+          "value": 15.84,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2025-12-31",
+          "value": 14.4,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2026-03-31",
+          "value": 15.17,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2026-06-30",
+          "value": 15.28,
+          "origin_name": "基本每股盈餘"
+        }
+      ],
+      "basis_events": [
+        {
+          "ticker": "2454",
+          "event_date": "2005-08-10",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2454",
+          "event_date": "2006-08-02",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2454",
+          "event_date": "2007-07-25",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2454",
+          "event_date": "2008-07-16",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2454",
+          "event_date": "2010-07-28",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        }
+      ]
+    },
+    "2345": {
+      "quarters": [
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2005-03-31",
+          "value": -0.3,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2005-06-30",
+          "value": -0.43,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2005-09-30",
+          "value": 0.05,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2005-12-31",
+          "value": 0.1,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2006-03-31",
+          "value": -0.21,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2006-06-30",
+          "value": -0.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2006-09-30",
+          "value": 0.1,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2006-12-31",
+          "value": 0.39,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2007-03-31",
+          "value": 0.03,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2007-06-30",
+          "value": 0.02,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2007-09-30",
+          "value": -0.13,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2007-12-31",
+          "value": -0.4,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2008-03-31",
+          "value": 0.13,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2008-06-30",
+          "value": 0.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2008-09-30",
+          "value": 0.43,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2008-12-31",
+          "value": -0.05,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2009-03-31",
+          "value": 0.08,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2009-06-30",
+          "value": 0.16,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2009-09-30",
+          "value": 0.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2009-12-31",
+          "value": 0.75,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2010-03-31",
+          "value": 0.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2010-06-30",
+          "value": 0.72,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2010-09-30",
+          "value": 0.55,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2010-12-31",
+          "value": 0.25,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2011-03-31",
+          "value": 0.29,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2011-06-30",
+          "value": 0.23,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2011-09-30",
+          "value": 0.55,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2011-12-31",
+          "value": 0.59,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2012-03-31",
+          "value": 0.26,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2012-06-30",
+          "value": 0.37,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2012-09-30",
+          "value": 0.67,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2012-12-31",
+          "value": 0.38,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2013-03-31",
+          "value": 0.13,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2013-06-30",
+          "value": 0.38,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2013-09-30",
+          "value": 0.26,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2013-12-31",
+          "value": 0.29,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2014-03-31",
+          "value": 0.36,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2014-06-30",
+          "value": 0.29,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2014-09-30",
+          "value": 0.12,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2014-12-31",
+          "value": 0.44,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2015-03-31",
+          "value": 0.21,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2015-06-30",
+          "value": 0.42,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2015-09-30",
+          "value": 0.71,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2015-12-31",
+          "value": 0.85,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2016-03-31",
+          "value": 0.74,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2016-06-30",
+          "value": 0.89,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2016-09-30",
+          "value": 0.89,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2016-12-31",
+          "value": 0.98,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2017-03-31",
+          "value": 1.19,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2017-06-30",
+          "value": 1.17,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2017-09-30",
+          "value": 1.2,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2017-12-31",
+          "value": 1.12,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2018-03-31",
+          "value": 0.94,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2018-06-30",
+          "value": 1.44,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2018-09-30",
+          "value": 1.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2018-12-31",
+          "value": 1.44,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2019-03-31",
+          "value": 1.37,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2019-06-30",
+          "value": 2.48,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2019-09-30",
+          "value": 3.12,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2019-12-31",
+          "value": 1.94,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2020-03-31",
+          "value": 1.86,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2020-06-30",
+          "value": 2.07,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2020-09-30",
+          "value": 2.69,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2020-12-31",
+          "value": 2.45,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2021-03-31",
+          "value": 2.02,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2021-06-30",
+          "value": 1.72,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2021-09-30",
+          "value": 1.96,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2021-12-31",
+          "value": 2.74,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2022-03-31",
+          "value": 2.31,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2022-06-30",
+          "value": 3.72,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2022-09-30",
+          "value": 4.41,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2022-12-31",
+          "value": 4.2,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2023-03-31",
+          "value": 3.65,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2023-06-30",
+          "value": 4.02,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2023-09-30",
+          "value": 4.28,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2023-12-31",
+          "value": 4.04,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2024-03-31",
+          "value": 4.02,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2024-06-30",
+          "value": 4.62,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2024-09-30",
+          "value": 4.75,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2024-12-31",
+          "value": 8.1,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2025-03-31",
+          "value": 9.17,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2025-06-30",
+          "value": 9.01,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2025-09-30",
+          "value": 14.0,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2025-12-31",
+          "value": 14.95,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2026-03-31",
+          "value": 14.92,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2345",
+          "type": "EPS",
+          "date": "2026-06-30",
+          "value": 19.78,
+          "origin_name": "基本每股盈餘"
+        }
+      ],
+      "basis_events": [
+        {
+          "ticker": "2345",
+          "event_date": "2011-08-02",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        }
+      ]
+    },
+    "2412": {
+      "quarters": [
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2005-03-31",
+          "value": 1.21,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2005-06-30",
+          "value": 1.31,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2005-09-30",
+          "value": 1.44,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2005-12-31",
+          "value": 0.98,
+          "origin_name": "每股稅後盈餘(元)"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2006-03-31",
+          "value": 1.04,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2006-06-30",
+          "value": 1.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2006-09-30",
+          "value": 1.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2006-12-31",
+          "value": 1.11,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2007-03-31",
+          "value": 1.25,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2007-06-30",
+          "value": 1.06,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2007-09-30",
+          "value": 1.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2007-12-31",
+          "value": 1.01,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2008-03-31",
+          "value": 1.12,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2008-06-30",
+          "value": 1.31,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2008-09-30",
+          "value": 1.39,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2008-12-31",
+          "value": 0.82,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2009-03-31",
+          "value": 1.11,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2009-06-30",
+          "value": 0.98,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2009-09-30",
+          "value": 1.33,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2009-12-31",
+          "value": 1.09,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2010-03-31",
+          "value": 1.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2010-06-30",
+          "value": 1.34,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2010-09-30",
+          "value": 1.23,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2010-12-31",
+          "value": 1.1,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2011-03-31",
+          "value": 1.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2011-06-30",
+          "value": 1.71,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2011-09-30",
+          "value": 1.54,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2011-12-31",
+          "value": 1.29,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2012-03-31",
+          "value": 1.22,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2012-06-30",
+          "value": 1.46,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2012-09-30",
+          "value": 1.31,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2012-12-31",
+          "value": 1.15,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2013-03-31",
+          "value": 1.19,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2013-06-30",
+          "value": 1.37,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2013-09-30",
+          "value": 1.37,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2013-12-31",
+          "value": 1.19,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2014-03-31",
+          "value": 1.32,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2014-06-30",
+          "value": 1.36,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2014-09-30",
+          "value": 1.25,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2014-12-31",
+          "value": 1.04,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2015-03-31",
+          "value": 1.34,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2015-06-30",
+          "value": 1.44,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2015-09-30",
+          "value": 1.52,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2015-12-31",
+          "value": 1.22,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2016-03-31",
+          "value": 1.5,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2016-06-30",
+          "value": 1.43,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2016-09-30",
+          "value": 1.23,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2016-12-31",
+          "value": 1.0,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2017-03-31",
+          "value": 1.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2017-06-30",
+          "value": 1.35,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2017-09-30",
+          "value": 1.31,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2017-12-31",
+          "value": 1.12,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2018-03-31",
+          "value": 1.13,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2018-06-30",
+          "value": 1.27,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2018-09-30",
+          "value": 1.1,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2018-12-31",
+          "value": 1.09,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2019-03-31",
+          "value": 1.08,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2019-06-30",
+          "value": 1.1,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2019-09-30",
+          "value": 1.04,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2019-12-31",
+          "value": 1.01,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2020-03-31",
+          "value": 1.07,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2020-06-30",
+          "value": 1.11,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2020-09-30",
+          "value": 1.07,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2020-12-31",
+          "value": 1.06,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2021-03-31",
+          "value": 1.14,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2021-06-30",
+          "value": 1.15,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2021-09-30",
+          "value": 1.21,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2021-12-31",
+          "value": 1.11,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2022-03-31",
+          "value": 1.17,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2022-06-30",
+          "value": 1.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2022-09-30",
+          "value": 1.21,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2022-12-31",
+          "value": 1.08,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2023-03-31",
+          "value": 1.24,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2023-06-30",
+          "value": 1.28,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2023-09-30",
+          "value": 1.17,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2023-12-31",
+          "value": 1.07,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2024-03-31",
+          "value": 1.21,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2024-06-30",
+          "value": 1.27,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2024-09-30",
+          "value": 1.16,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2024-12-31",
+          "value": 1.16,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2025-03-31",
+          "value": 1.26,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2025-06-30",
+          "value": 1.31,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2025-09-30",
+          "value": 1.22,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2025-12-31",
+          "value": 1.2,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2026-03-31",
+          "value": 1.3,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2412",
+          "type": "EPS",
+          "date": "2026-06-30",
+          "value": 1.38,
+          "origin_name": "基本每股盈餘"
+        }
+      ],
+      "basis_events": [
+        {
+          "ticker": "2412",
+          "event_date": "2006-08-10",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2412",
+          "event_date": "2007-07-26",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2412",
+          "event_date": "2008-10-17",
+          "event_type": "stock_distribution",
+          "source": "FinMind:TaiwanStockDividend",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        },
+        {
+          "ticker": "2412",
+          "event_date": "2011-01-25",
+          "event_type": "capital_reduction",
+          "source": "FinMind:TaiwanStockCapitalReductionReferencePrice",
+          "source_reference": "https://api.finmindtrade.com/api/v4/data",
+          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+        }
+      ]
+    }
+  },
+  "version": "4c7e7e8461dbfda916b5aee1539411dc505db9c0f6bc0d90b9004bc6019a7dcc"
+}
