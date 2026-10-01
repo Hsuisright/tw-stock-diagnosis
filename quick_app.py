@@ -1,10 +1,6 @@
-"""Streamlit Cloud entry point for the approved V1.5 candidate."""
-# Keep the Cloud main file stable while the complete V1.5 application remains
-# in its own module for local candidate launches and targeted testing.
-from quick_app_v15 import *  # noqa: F401,F403
-
-import streamlit as st
-st.stop()
+from pathlib import Path
+import hmac
+import sys
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -15,11 +11,16 @@ from diagnosis.quick_analysis import analyze_stock
 from diagnosis.reversal_view import render_reversal
 from diagnosis.interpretation import build_interpretation, build_opportunity_risk
 from diagnosis.sources import search_stock_directory, update_finmind_history, update_stock_directory
+from diagnosis.eps_history_store import hydrate_from_seed, refresh as refresh_eps_history
 from diagnosis.technical import price_position_label, trend_label
+from diagnosis.valuation_requirement_view import fingerprint
+from diagnosis.valuation_v15_view import current_actual_ttm
 
 
 ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"quick_analysis.db"
+EPS_DB=ROOT/"data"/"eps_history.sqlite3"
+EPS_SEED=ROOT/"public_data"/"eps_seed_v1.json"
 
 st.set_page_config(page_title="台股快速溫度分析",page_icon="🌡️",layout="wide")
 st.markdown('''<style>
@@ -64,8 +65,9 @@ def require_test_password():
 
 
 require_test_password()
+st.caption("Product Version: V1.5 · 本機候選版")
 if st.query_params.get('view') == 'valuation_help':
-    from diagnosis.valuation_requirement_view import render_help
+    from diagnosis.valuation_v15_view import render_help
     render_help()
     st.stop()
 # V1 hides the historical-trend and readiness preview entrances.
@@ -78,11 +80,30 @@ stock_id=c1.text_input("股票代號或名稱",value="2330",placeholder="例如�
 run=c2.button("搜尋並分析",type="primary",width="stretch")
 st.caption("只使用公開市場資料，不需要帳戶、股數或持倉成本。")
 
+def render_price_temperature(result):
+    st.subheader("短期價格溫度")
+    b=result["bollinger"]
+    if not b: st.warning("價格資料不足20筆，無法計算布林通道。")
+    else:
+        st.markdown(f'<div class="bar"><div style="width:{b.temperature:.1f}%"></div></div>',unsafe_allow_html=True)
+        p1,p2,p3,p4=st.columns(4)
+        p1.metric("價格溫度",f"{b.temperature:.0f}°C")
+        p2.metric("布林位階",price_position_label(b.percent_b))
+        p3.metric("均線方向",trend_label(b.ma_slope))
+        p4.metric("通道寬度",f"{b.bandwidth:.1f}%")
+
 def run_analysis(sid,label=None):
     with st.spinner(f"正在更新 {label or sid} 的歷史價格與PE…"):
         counts,errors=update_finmind_history(DB,sid,"2019-01-01")
         _,benchmark_errors=update_finmind_history(DB,"0050","2019-01-01",include_pe=False)
         errors.extend(benchmark_errors)
+        try:
+            # Seeded names open immediately from a versioned public cache.
+            # Other names retain the existing live public-source path.
+            if not hydrate_from_seed(EPS_DB, EPS_SEED, sid):
+                refresh_eps_history(EPS_DB,sid)
+        except Exception as exc:
+            errors.append(f"季度EPS：{exc}")
     if errors: st.warning("；".join(errors))
     try:
         st.session_state["analysis"]=analyze_stock(DB,sid)
@@ -125,7 +146,9 @@ if result:
     identity=f'{result.get("stock_name") or ""}（{result["stock_id"]}）' if result.get("stock_name") else result["stock_id"]
     st.subheader(f'{identity}｜資料日 {result["price_date"]}')
     st.metric("目前股價",f'{result["price"]:,.2f} 元')
-    render_reversal(result)
+    st.header("短期市場與技術面")
+    st.caption("觀察價格、趨勢、動能、量價、相對強弱與市場結構。")
+    render_reversal(result, before_chart=lambda: render_price_temperature(result), compact=True)
     interpretation=build_interpretation(result)
     st.subheader("綜合判讀")
     st.info(interpretation["overall"])
@@ -146,85 +169,85 @@ if result:
         st.markdown(f'- **成長空間：** {matrix["elasticity_reason"]}')
         st.markdown(f'- **估值風險：** {matrix["valuation_reason"]}')
         st.markdown(f'- **價格風險：** {matrix["price_reason"]}')
+    st.header("長期基本面與估值")
+    st.caption("觀察實際獲利與目前價格對 EPS 的要求；不是未來獲利預測。")
     if result["valuation_available"]:
         temp=result["valuation_temperature"]
+        actual_ttm = current_actual_ttm(str(EPS_DB), result["stock_id"], result["price_date"], fingerprint(EPS_DB))
+        actual_eps = actual_ttm["value"]
+        actual_reference_price = actual_eps * result["normal_pe"] if actual_eps is not None else None
+        actual_premium = result["price"] - actual_reference_price if actual_reference_price is not None else None
         st.subheader("估值溫度")
         st.markdown(f'<div class="bar"><div style="width:{temp:.1f}%"></div></div>',unsafe_allow_html=True)
         v1,v2,v3,v4=st.columns(4)
         v1.metric("估值溫度",f"{temp:.0f}°C")
         v2.metric("目前／歷史參考PE",f'{result["current_pe"]:.1f}／{result["normal_pe"]:.1f}倍')
-        v3.metric("隱含TTM EPS",f'{result["current_eps"]:.2f}元')
-        v4.metric("歷史PE參考價格",f'{result["support_price"]:.2f}元')
-        if result["premium_amount"]>=0: st.info(f'相對歷史PE參考價格溢價 {result["premium_amount"]:.2f}元（{result["premium_pct"]:.1f}%）')
-        else: st.success(f'相對歷史PE參考價格折價 {-result["premium_amount"]:.2f}元（{-result["premium_pct"]:.1f}%）')
-        st.caption('以上保留既有隱含 EPS／成長資訊（股價 ÷ PE），不作下方實際季度 EPS 或歷史 Lead Time 的資料來源。')
-        g=result["growth"]
-        is_buffer=g.required_growth_1y < 0
-        st.subheader("市場隱含獲利緩衝" if is_buffer else "市場隱含成長壓力")
-        g1,g2,g3,g4=st.columns(4)
-        g1.metric("歷史PE參考所需EPS",f"{g.required_eps:.2f}元")
-        if is_buffer:
-            g2.metric("1年可容許EPS下降",f"{-g.required_growth_1y:.1%}")
-            g3.metric("2年年化可容許下降",f"{-g.required_cagr_2y:.1%}")
-            g4.metric("3年年化可容許下降",f"{-g.required_cagr_3y:.1%}")
-            st.info("目前隱含EPS高於歷史PE基準下支撐現價所需水準；這是估值緩衝，不是EPS衰退預測。")
+        v3.metric("近四季實際 EPS（TTM）",f'{actual_eps:.2f}元' if actual_eps is not None else 'N/A')
+        v4.metric("實際EPS參考價格",f'{actual_reference_price:.2f}元' if actual_reference_price is not None else 'N/A')
+        if actual_premium is None:
+            st.info(f'近四季實際 EPS（TTM）資料不足：{actual_ttm["reason"]}。不以股價／本益比反推值替代。')
+        elif actual_premium>=0:
+            st.info(f'相對實際EPS參考價格溢價 {actual_premium:.2f}元（{actual_premium / actual_reference_price:.1f}%）')
         else:
-            g2.metric("1年所需成長",f"{g.required_growth_1y:.1%}")
-            g3.metric("2年年化成長",f"{g.required_cagr_2y:.1%}")
-            g4.metric("3年年化成長",f"{g.required_cagr_3y:.1%}")
-        if not is_buffer and g.achievement_rate is None: st.warning(f"{g.label}；目前只有{g.sample_count}個有效歷史樣本。")
-        elif not is_buffer:
-            st.info(f"{g.label}｜歷史EPS成長中位數 {g.historical_median:.1%}｜歷史達成率 {g.achievement_rate:.0%}｜樣本 {g.sample_count}")
+            st.success(f'相對實際EPS參考價格折價 {-actual_premium:.2f}元（{-actual_premium / actual_reference_price:.1f}%）')
+        st.caption('V1.5 主估值計算均使用近四季實際 EPS（TTM）；不使用股價／本益比反推 EPS。')
+        with st.expander("舊版隱含成長診斷（股價／本益比反推值，僅供參考）"):
+            g=result["growth"]
+            is_buffer=g.required_growth_1y < 0
+            st.subheader("市場隱含獲利緩衝" if is_buffer else "市場隱含成長壓力")
+            g1,g2,g3,g4=st.columns(4)
+            st.caption('此區僅保留舊版診斷，不會進入 V1.5 的 TTM EPS、所需成長率或歷史成長能力計算。')
+            g1.metric("歷史PE參考所需EPS（舊版）",f"{g.required_eps:.2f}元")
+            if is_buffer:
+                g2.metric("1年可容許EPS下降",f"{-g.required_growth_1y:.1%}")
+                g3.metric("2年年化可容許下降",f"{-g.required_cagr_2y:.1%}")
+                g4.metric("3年年化可容許下降",f"{-g.required_cagr_3y:.1%}")
+                st.info("目前隱含EPS高於歷史PE基準下支撐現價所需水準；這是估值緩衝，不是EPS衰退預測。")
+            else:
+                g2.metric("1年所需成長",f"{g.required_growth_1y:.1%}")
+                g3.metric("2年年化成長",f"{g.required_cagr_2y:.1%}")
+                g4.metric("3年年化成長",f"{g.required_cagr_3y:.1%}")
+            if not is_buffer and g.achievement_rate is None: st.warning(f"{g.label}；目前只有{g.sample_count}個有效歷史樣本。")
+            elif not is_buffer:
+                st.info(f"{g.label}｜歷史EPS成長中位數 {g.historical_median:.1%}｜歷史達成率 {g.achievement_rate:.0%}｜樣本 {g.sample_count}")
     else:
         st.warning(result.get("valuation_note","估值資料不足"))
-    from diagnosis.valuation_requirement_view import render as render_requirement
-    render_requirement(result, ROOT, DB)
-    st.subheader("短期價格溫度")
-    b=result["bollinger"]
-    if not b: st.warning("價格資料不足20筆，無法計算布林通道。")
-    else:
-        st.markdown(f'<div class="bar"><div style="width:{b.temperature:.1f}%"></div></div>',unsafe_allow_html=True)
-        p1,p2,p3,p4=st.columns(4)
-        p1.metric("價格溫度",f"{b.temperature:.0f}°C")
-        p2.metric("布林位階",price_position_label(b.percent_b))
-        p3.metric("均線方向",trend_label(b.ma_slope))
-        p4.metric("通道寬度",f"{b.bandwidth:.1f}%")
-    t=result.get("technical")
-    if t:
-        st.subheader("技術診斷")
-        st.info(t.summary)
-        t1,t2,t3,t4=st.columns(4)
-        t1.metric("短線",t.short_state)
-        t2.metric("中期",t.medium_state)
-        t3.metric("長期",t.long_state)
-        t4.metric("波動風險",t.risk_state)
-
-        st.markdown("#### 趨勢與動能")
-        rows=[]
-        for label,avg,momentum in (("20日",t.ma20,t.momentum20),("60日",t.ma60,t.momentum60),
-                                   ("120日",t.ma120,t.momentum120),("240日",t.ma240,None)):
-            rows.append({"週期":label,"均線":f"{avg:.2f}" if avg is not None else "—",
-                         "動能":f"{momentum:+.1%}" if momentum is not None else "—"})
-        st.table(rows)
-
-        s1,s2,s3=st.columns(3)
-        s1.metric("型態",t.pattern_state)
-        s2.metric("量價",t.volume_state, f"量比 {t.volume_ratio:.2f}倍" if t.volume_ratio is not None else None)
-        s3.metric("60日年化波動",f"{t.volatility60:.1%}" if t.volatility60 is not None else "—")
-        if t.range20_high is not None:
-            st.caption(f"20日觀察區間：{t.range20_low:.2f}～{t.range20_high:.2f}元｜60日觀察區間：{t.range60_low:.2f}～{t.range60_high:.2f}元。這些是結構觀察線，不是自動買賣價。")
-
-        bull,bear=st.columns(2)
-        with bull:
-            st.markdown("#### 多方證據")
-            if t.bullish_evidence:
-                for item in t.bullish_evidence: st.success(f"＋ {item}")
-            else: st.caption("目前沒有明確多方證據")
-        with bear:
-            st.markdown("#### 空方／風險證據")
-            if t.bearish_evidence:
-                for item in t.bearish_evidence: st.warning(f"－ {item}")
-            else: st.caption("目前沒有明確空方證據")
-        if t.neutral_evidence:
-            st.caption("中性／待確認："+"；".join(t.neutral_evidence))
+    from diagnosis.valuation_v15_view import render as render_requirement
+    render_requirement(result, ROOT, DB, EPS_DB)
+    with st.expander("技術診斷詳細資料"):
+        t=result.get("technical")
+        if t:
+            st.subheader("技術診斷")
+            st.info(t.summary)
+            t1,t2,t3,t4=st.columns(4)
+            t1.metric("短線",t.short_state)
+            t2.metric("中期",t.medium_state)
+            t3.metric("長期",t.long_state)
+            t4.metric("波動風險",t.risk_state)
+            st.markdown("#### 趨勢與動能")
+            rows=[]
+            for label,avg,momentum in (("20日",t.ma20,t.momentum20),("60日",t.ma60,t.momentum60),
+                                       ("120日",t.ma120,t.momentum120),("240日",t.ma240,None)):
+                rows.append({"週期":label,"均線":f"{avg:.2f}" if avg is not None else "—",
+                             "動能":f"{momentum:+.1%}" if momentum is not None else "—"})
+            st.table(rows)
+            s1,s2,s3=st.columns(3)
+            s1.metric("型態",t.pattern_state)
+            s2.metric("量價",t.volume_state, f"量比 {t.volume_ratio:.2f}倍" if t.volume_ratio is not None else None)
+            s3.metric("60日年化波動",f"{t.volatility60:.1%}" if t.volatility60 is not None else "—")
+            if t.range20_high is not None:
+                st.caption(f"20日觀察區間：{t.range20_low:.2f}～{t.range20_high:.2f}元｜60日觀察區間：{t.range60_low:.2f}～{t.range60_high:.2f}元。這些是結構觀察線，不是自動買賣價。")
+            bull,bear=st.columns(2)
+            with bull:
+                st.markdown("#### 多方證據")
+                if t.bullish_evidence:
+                    for item in t.bullish_evidence: st.success(f"＋ {item}")
+                else: st.caption("目前沒有明確多方證據")
+            with bear:
+                st.markdown("#### 空方／風險證據")
+                if t.bearish_evidence:
+                    for item in t.bearish_evidence: st.warning(f"－ {item}")
+                else: st.caption("目前沒有明確空方證據")
+            if t.neutral_evidence:
+                st.caption("中性／待確認："+"；".join(t.neutral_evidence))
     st.caption("本頁為歷史比較與市場期待診斷，不構成投資建議。")
