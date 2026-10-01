@@ -148,7 +148,11 @@ if result:
     st.metric("目前股價",f'{result["price"]:,.2f} 元')
     st.header("短期市場與技術面")
     st.caption("觀察價格、趨勢、動能、量價、相對強弱與市場結構。")
-    render_reversal(result, before_chart=lambda: render_price_temperature(result), compact=True)
+    # Keep the public deployment compatible with the established reversal view.
+    # The optional compact/callback interface is a local candidate enhancement
+    # and is not part of the deployed module contract.
+    render_price_temperature(result)
+    render_reversal(result)
     interpretation=build_interpretation(result)
     st.subheader("綜合判讀")
     st.info(interpretation["overall"])
