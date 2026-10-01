@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-01T18:39:32.533849+00:00",
+  "generated_at": "2026-10-01T18:40:35.882942+00:00",
   "source": "FinMind public datasets",
   "tickers": {
     "2330": {
@@ -615,7 +615,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2330",
@@ -623,7 +623,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2330",
@@ -631,7 +631,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2330",
@@ -639,7 +639,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         }
       ]
     },
@@ -1255,7 +1255,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2454",
@@ -1263,7 +1263,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2454",
@@ -1271,7 +1271,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2454",
@@ -1279,7 +1279,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2454",
@@ -1287,7 +1287,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         }
       ]
     },
@@ -1903,7 +1903,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         }
       ]
     },
@@ -2519,7 +2519,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2412",
@@ -2527,7 +2527,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2412",
@@ -2535,7 +2535,7 @@
           "event_type": "stock_distribution",
           "source": "FinMind:TaiwanStockDividend",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         },
         {
           "ticker": "2412",
@@ -2543,10 +2543,10 @@
           "event_type": "capital_reduction",
           "source": "FinMind:TaiwanStockCapitalReductionReferencePrice",
           "source_reference": "https://api.finmindtrade.com/api/v4/data",
-          "fetched_at": "2026-10-01T18:39:32.533849+00:00"
+          "fetched_at": "2026-10-01T18:40:35.882942+00:00"
         }
       ]
     }
   },
-  "version": "4c7e7e8461dbfda916b5aee1539411dc505db9c0f6bc0d90b9004bc6019a7dcc"
+  "version": "79696cf7435452fb872ffae7b1dc7a5d461873f57bbc3dc29e9136a520c2e983"
 }
