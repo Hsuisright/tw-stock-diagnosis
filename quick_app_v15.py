@@ -15,12 +15,16 @@ from diagnosis.eps_history_store import hydrate_from_seed, refresh as refresh_ep
 from diagnosis.technical import price_position_label, trend_label
 from diagnosis.valuation_requirement_view import fingerprint
 from diagnosis.valuation_v15_view import current_actual_ttm
+from diagnosis.positioning import load_seed
+from diagnosis.positioning_rules import calculate as calculate_positioning
+from diagnosis.positioning_view import render as render_positioning
 
 
 ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"quick_analysis.db"
 EPS_DB=ROOT/"data"/"eps_history.sqlite3"
 EPS_SEED=ROOT/"public_data"/"eps_seed_v1.json"
+POSITIONING_SEED=ROOT/"public_data"/"positioning_seed_v1.json"
 
 st.set_page_config(page_title="台股快速溫度分析",page_icon="🌡️",layout="wide")
 st.markdown('''<style>
@@ -106,7 +110,20 @@ def run_analysis(sid,label=None):
             errors.append(f"季度EPS：{exc}")
     if errors: st.warning("；".join(errors))
     try:
-        st.session_state["analysis"]=analyze_stock(DB,sid)
+        analysis=analyze_stock(DB,sid)
+        positioning_rows, positioning_meta = load_seed(POSITIONING_SEED, sid)
+        bars=analysis.get("bars") or []
+        price_return_5d = None
+        if len(bars) >= 6:
+            previous, latest = bars[-6].get("close"), bars[-1].get("close")
+            if previous not in (None, 0) and latest is not None:
+                price_return_5d = float(latest) / float(previous) - 1
+        analysis["positioning"] = calculate_positioning(
+            positioning_rows, price_return_5d,
+            analysis.get("technical").volume_ratio if analysis.get("technical") else None,
+            positioning_meta,
+        )
+        st.session_state["analysis"]=analysis
         st.session_state.pop("search_matches",None)
     except ValueError as exc: st.error(str(exc))
 
@@ -152,6 +169,7 @@ if result:
     # The optional compact/callback interface is a local candidate enhancement
     # and is not part of the deployed module contract.
     render_price_temperature(result)
+    render_positioning(result.get("positioning") or calculate_positioning([], None, None, None))
     render_reversal(result)
     interpretation=build_interpretation(result)
     st.subheader("綜合判讀")

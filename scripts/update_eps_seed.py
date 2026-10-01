@@ -16,8 +16,22 @@ from diagnosis.eps_history_store import (  # noqa: E402
     _basis_events,
     fetch_finmind_eps,
 )
+from diagnosis.positioning import write_seed as write_positioning_seed  # noqa: E402
 
 TICKERS = ("2330", "2454", "2345", "2412")
+
+
+def write_if_changed(path: Path, payload: dict) -> bool:
+    """Keep the public data commit stable when reported facts are unchanged."""
+    try:
+        existing = json.loads(path.read_text(encoding="utf-8"))
+        if existing.get("schema_version") == payload.get("schema_version") and existing.get("version") == payload.get("version"):
+            return False
+    except (OSError, ValueError, TypeError, json.JSONDecodeError):
+        pass
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return True
 
 
 def build(tickers=TICKERS):
@@ -32,7 +46,8 @@ def build(tickers=TICKERS):
                  "origin_name": row["original_field"]}
                 for row in rows
             ],
-            "basis_events": _basis_events(ticker, "2005-01-01", generated_at),
+            "basis_events": [{key: value for key, value in event.items() if key != "fetched_at"}
+                             for event in _basis_events(ticker, "2005-01-01", generated_at)],
         }
     version_source = json.dumps(output["tickers"], sort_keys=True, ensure_ascii=False).encode()
     output["version"] = sha256(version_source).hexdigest()
@@ -42,11 +57,15 @@ def build(tickers=TICKERS):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=ROOT / "public_data" / "eps_seed_v1.json")
+    parser.add_argument("--positioning-output", type=Path,
+                        default=ROOT / "public_data" / "positioning_seed_v1.json")
+    parser.add_argument("--positioning-start-date", default="2024-01-01")
     args = parser.parse_args()
     payload = build()
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"wrote {args.output} for {len(payload['tickers'])} tickers")
+    changed = write_if_changed(args.output, payload)
+    print(f"{'wrote' if changed else 'unchanged'} {args.output} for {len(payload['tickers'])} tickers")
+    positioning = write_positioning_seed(args.positioning_output, TICKERS, args.positioning_start_date)
+    print(f"wrote {args.positioning_output} for {len(positioning['tickers'])} tickers")
 
 
 if __name__ == "__main__":
