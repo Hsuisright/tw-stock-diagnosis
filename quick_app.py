@@ -15,7 +15,7 @@ from diagnosis.eps_history_store import hydrate_from_seed, refresh as refresh_ep
 from diagnosis.technical import price_position_label, trend_label
 from diagnosis.valuation_requirement_view import fingerprint
 from diagnosis.valuation_v15_view import current_actual_ttm
-from diagnosis.positioning import load_seed
+from diagnosis.public_positioning import read_for_streamlit
 from diagnosis.positioning_rules import calculate as calculate_positioning
 from diagnosis.positioning_view import render as render_positioning
 
@@ -24,7 +24,7 @@ ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"quick_analysis.db"
 EPS_DB=ROOT/"data"/"eps_history.sqlite3"
 EPS_SEED=ROOT/"public_data"/"eps_seed_v1.json"
-POSITIONING_SEED=ROOT/"public_data"/"positioning_seed_v1.json"
+POSITIONING_DATA=ROOT/"public_data"/"public_positioning.csv"
 
 st.set_page_config(page_title="台股快速溫度分析",page_icon="🌡️",layout="wide")
 st.markdown('''<style>
@@ -111,7 +111,8 @@ def run_analysis(sid,label=None):
     if errors: st.warning("；".join(errors))
     try:
         analysis=analyze_stock(DB,sid)
-        positioning_rows, positioning_meta = load_seed(POSITIONING_SEED, sid)
+        positioning_rows = read_for_streamlit(POSITIONING_DATA, sid)
+        positioning_meta = {"source": "TWSE/TPEx official public data"} if positioning_rows else None
         bars=analysis.get("bars") or []
         price_return_5d = None
         if len(bars) >= 6:
