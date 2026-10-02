@@ -34,16 +34,18 @@ class PositioningTests(unittest.TestCase):
         data = rows()
         data[-1]["margin_balance"] = None
         self.assertEqual(calculate(data, .03, 1.3).state, "INSUFFICIENT_DATA")
-        self.assertEqual(calculate(rows()[:20], .03, 1.3).state, "INSUFFICIENT_DATA")
+        self.assertEqual(calculate(rows()[:5], .03, 1.3).state, "INSUFFICIENT_DATA")
 
-    def test_lending_is_explicit_missing_not_substituted(self):
-        item = calculate(rows(), .0, 1.0)
-        self.assertIn("securities_lending（公開餘額欄位尚未驗證）", item.missing)
+    def test_old_missing_observation_does_not_block_current_5d_state(self):
+        data = rows(latest_short=90)
+        data[0]["short_balance"] = None
+        self.assertEqual(calculate(data, .04, 1.3).state, "SHORT_COVERING_COMPATIBLE")
 
     def test_short_covering_rule(self):
         item = calculate(rows(latest_short=90), .04, 1.3)
         self.assertEqual(item.state, "SHORT_COVERING_COMPATIBLE")
         self.assertTrue(any("融券" in line for line in item.evidence))
+        self.assertTrue(any("相符" in line for line in item.evidence))
 
     def test_long_deleveraging_rule(self):
         item = calculate(rows(latest_margin=90), -.04, 1.3)
@@ -52,6 +54,22 @@ class PositioningTests(unittest.TestCase):
     def test_two_sided_crowding_rule(self):
         item = calculate(rows(latest_margin=110, latest_short=110), .04, 1.0)
         self.assertEqual(item.state, "TWO_SIDED_CROWDING")
+
+    def test_short_pressure_building_rule(self):
+        self.assertEqual(calculate(rows(latest_short=110), -.04, 1.3).state,
+                         "SHORT_PRESSURE_BUILDING")
+
+    def test_long_crowding_building_rule(self):
+        self.assertEqual(calculate(rows(latest_margin=110), .04, 1.0).state,
+                         "LONG_CROWDING_BUILDING")
+
+    def test_pressure_releasing_rule(self):
+        self.assertEqual(calculate(rows(latest_margin=90, latest_short=90), .0, 1.0).state,
+                         "PRESSURE_RELEASING")
+
+    def test_price_20d_is_retained(self):
+        item = calculate(rows(), .01, 1.0, price_return_20d=.12)
+        self.assertAlmostEqual(item.price_return_20d, .12)
 
     def test_neutral_and_deterministic(self):
         first = calculate(rows(), .01, 1.0)

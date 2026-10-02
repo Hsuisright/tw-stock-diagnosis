@@ -115,14 +115,19 @@ def run_analysis(sid,label=None):
         positioning_meta = {"source": "TWSE/TPEx official public data"} if positioning_rows else None
         bars=analysis.get("bars") or []
         price_return_5d = None
+        price_return_20d = None
         if len(bars) >= 6:
             previous, latest = bars[-6].get("close"), bars[-1].get("close")
             if previous not in (None, 0) and latest is not None:
                 price_return_5d = float(latest) / float(previous) - 1
+        if len(bars) >= 21:
+            previous_20d, latest = bars[-21].get("close"), bars[-1].get("close")
+            if previous_20d not in (None, 0) and latest is not None:
+                price_return_20d = float(latest) / float(previous_20d) - 1
         analysis["positioning"] = calculate_positioning(
             positioning_rows, price_return_5d,
             analysis.get("technical").volume_ratio if analysis.get("technical") else None,
-            positioning_meta,
+            positioning_meta, price_return_20d,
         )
         st.session_state["analysis"]=analysis
         st.session_state.pop("search_matches",None)

@@ -8,10 +8,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import isfinite
 
+# Rule thresholds are deliberately small, named constants.  They describe a
+# repeatable *structure* rather than a forecast or a trading threshold.
 PRICE_DIRECTION_5D = 0.02
 BALANCE_CHANGE_5D = 0.05
 VOLUME_EXPANSION = 1.20
-REQUIRED_OBSERVATIONS = 21
+REQUIRED_OBSERVATIONS = 6
 
 STATE_LABELS = {
     "NEUTRAL": "無明確籌碼壓力",
@@ -58,55 +60,70 @@ class PositioningSnapshot:
     short_change_5d_pct: float | None
     short_change_20d_pct: float | None
     price_return_5d: float | None
+    price_return_20d: float | None
     volume_ratio: float | None
     source: str | None
     generated_at: str | None
 
 
 def calculate(rows: list[dict], price_return_5d: float | None, volume_ratio: float | None,
-              metadata: dict | None = None) -> PositioningSnapshot:
+              metadata: dict | None = None, price_return_20d: float | None = None) -> PositioningSnapshot:
     rows = sorted(rows, key=lambda row: row.get("date", ""))
     missing = []
     margins = [row.get("margin_balance") for row in rows]
     shorts = [row.get("short_balance") for row in rows]
     if len(rows) < REQUIRED_OBSERVATIONS:
-        missing.append("至少需21個交易日的融資與融券餘額")
-    if any(value is None for value in margins):
-        missing.append("margin_balance")
-    if any(value is None for value in shorts):
-        missing.append("short_balance")
+        missing.append("至少需6個交易日的融資與融券餘額")
     if price_return_5d is None:
         missing.append("5日價格變化")
     if volume_ratio is None:
         missing.append("成交量比")
-    # Securities lending is intentionally not inferred from the transaction
-    # dataset: FinMind's public response has transactions, not a stable balance.
-    missing.append("securities_lending（公開餘額欄位尚未驗證）")
     margin_1d, margin_5d = _change(margins, 1), _change(margins, 5)
     margin_20d = _change(margins, 20)
     short_1d, short_5d = _change(shorts, 1), _change(shorts, 5)
     short_20d = _change(shorts, 20)
-    material_missing = any(item in missing for item in ("至少需21個交易日的融資與融券餘額", "margin_balance", "short_balance", "5日價格變化", "成交量比"))
+    if margin_20d[0] is None or short_20d[0] is None:
+        missing.append("20日融資／融券變化")
+    material_missing = (margin_5d[0] is None or short_5d[0] is None
+                        or any(item in missing for item in ("至少需6個交易日的融資與融券餘額", "5日價格變化", "成交量比")))
     evidence = []
     if not material_missing:
-        evidence = [f"5日股價變化 {_fmt(price_return_5d)}", f"量比 {volume_ratio:.2f}倍",
-                    f"5日融資餘額 {_fmt(margin_5d[1])}", f"5日融券餘額 {_fmt(short_5d[1])}"]
+        common_evidence = [
+            f"5日股價變化 {_fmt(price_return_5d)}",
+            f"量比 {volume_ratio:.2f}倍",
+            f"5日融資餘額 {_fmt(margin_5d[1])}",
+            f"5日融券餘額 {_fmt(short_5d[1])}",
+        ]
         expanded_volume = volume_ratio >= VOLUME_EXPANSION
         if price_return_5d >= PRICE_DIRECTION_5D and expanded_volume and short_5d[1] <= -BALANCE_CHANGE_5D:
             state = "SHORT_COVERING_COMPATIBLE"
+            evidence = [common_evidence[0], common_evidence[3], common_evidence[1],
+                        "價格走強期間伴隨融券部位下降，結構與空方回補相符。"]
         elif price_return_5d <= -PRICE_DIRECTION_5D and expanded_volume and margin_5d[1] <= -BALANCE_CHANGE_5D:
             state = "LONG_DELEVERAGING_COMPATIBLE"
+            evidence = [common_evidence[0], common_evidence[2], common_evidence[1],
+                        "價格走弱期間伴隨融資部位下降，結構與多方去槓桿相符。"]
         elif abs(price_return_5d) >= PRICE_DIRECTION_5D and margin_5d[1] >= BALANCE_CHANGE_5D and short_5d[1] >= BALANCE_CHANGE_5D:
             state = "TWO_SIDED_CROWDING"
+            evidence = [common_evidence[0], common_evidence[2], common_evidence[3],
+                        "融資與融券部位同步增加，呈現多空雙向擁擠結構。"]
         elif price_return_5d >= PRICE_DIRECTION_5D and margin_5d[1] >= BALANCE_CHANGE_5D:
             state = "LONG_CROWDING_BUILDING"
+            evidence = [common_evidence[0], common_evidence[2], common_evidence[1],
+                        "價格走強期間融資部位增加，結構與多方擁擠累積相符。"]
         elif price_return_5d <= -PRICE_DIRECTION_5D and short_5d[1] >= BALANCE_CHANGE_5D:
             state = "SHORT_PRESSURE_BUILDING"
+            evidence = [common_evidence[0], common_evidence[3], common_evidence[1],
+                        "價格走弱期間融券部位增加，結構與空方壓力累積相符。"]
         elif (margin_5d[1] is not None and short_5d[1] is not None
               and margin_5d[1] <= -BALANCE_CHANGE_5D and short_5d[1] <= -BALANCE_CHANGE_5D):
             state = "PRESSURE_RELEASING"
+            evidence = [common_evidence[2], common_evidence[3], common_evidence[0],
+                        "融資與融券部位同步下降，呈現籌碼壓力釋放結構。"]
         else:
             state = "NEUTRAL"
+            evidence = [common_evidence[0], common_evidence[1], common_evidence[2],
+                        "目前未見符合既定規則的單一籌碼壓力結構。"]
     else:
         state = "INSUFFICIENT_DATA"
         evidence = ["融資／融券、價格或量能資料不足，未推定籌碼狀態。"]
@@ -118,5 +135,5 @@ def calculate(rows: list[dict], price_return_5d: float | None, volume_ratio: flo
         margins[-1] if margins else None, shorts[-1] if shorts else None,
         margin_1d[0], margin_5d[0], margin_20d[0], margin_5d[1], margin_20d[1],
         short_1d[0], short_5d[0], short_20d[0], short_5d[1], short_20d[1],
-        price_return_5d, volume_ratio, meta.get("source"), meta.get("generated_at"),
+        price_return_5d, price_return_20d, volume_ratio, meta.get("source"), meta.get("generated_at"),
     )
