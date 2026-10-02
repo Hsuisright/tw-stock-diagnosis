@@ -32,9 +32,10 @@ def render(snapshot):
         b.metric("融券1日變化", _change(snapshot.short_change_1d, None))
         c.metric("融券5日變化", _change(snapshot.short_change_5d, snapshot.short_change_5d_pct))
         d.metric("融券20日變化", _change(snapshot.short_change_20d, snapshot.short_change_20d_pct))
-        if (snapshot.price_return_5d is not None and snapshot.price_return_20d is not None
+        price_return_20d = getattr(snapshot, "price_return_20d", None)
+        if (snapshot.price_return_5d is not None and price_return_20d is not None
                 and snapshot.volume_ratio is not None):
-            st.caption(f"價格變化：5日 {snapshot.price_return_5d:+.1%}｜20日 {snapshot.price_return_20d:+.1%}｜量比 {snapshot.volume_ratio:.2f}倍")
+            st.caption(f"價格變化：5日 {snapshot.price_return_5d:+.1%}｜20日 {price_return_20d:+.1%}｜量比 {snapshot.volume_ratio:.2f}倍")
         if snapshot.missing:
             st.caption("缺少／限制：" + "；".join(snapshot.missing))
         if snapshot.latest_date:

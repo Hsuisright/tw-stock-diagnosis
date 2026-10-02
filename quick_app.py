@@ -1,5 +1,6 @@
 from pathlib import Path
 import hmac
+import inspect
 import sys
 
 import pandas as pd
@@ -25,6 +26,12 @@ DB=ROOT/"data"/"quick_analysis.db"
 EPS_DB=ROOT/"data"/"eps_history.sqlite3"
 EPS_SEED=ROOT/"public_data"/"eps_seed_v1.json"
 POSITIONING_DATA=ROOT/"public_data"/"public_positioning.csv"
+
+# Streamlit Cloud can briefly retain an imported helper across a hot update.
+# During that window an earlier positioning helper has no 20-day argument.
+# Detect its public callable contract instead of raising and leaving the page
+# blank; a fresh process always follows the current five-argument path.
+POSITIONING_SUPPORTS_PRICE_20D = "price_return_20d" in inspect.signature(calculate_positioning).parameters
 
 st.set_page_config(page_title="台股快速溫度分析",page_icon="🌡️",layout="wide")
 st.markdown('''<style>
@@ -124,10 +131,16 @@ def run_analysis(sid,label=None):
             previous_20d, latest = bars[-21].get("close"), bars[-1].get("close")
             if previous_20d not in (None, 0) and latest is not None:
                 price_return_20d = float(latest) / float(previous_20d) - 1
-        analysis["positioning"] = calculate_positioning(
-            positioning_rows, price_return_5d,
+        positioning_args = (
+            positioning_rows,
+            price_return_5d,
             analysis.get("technical").volume_ratio if analysis.get("technical") else None,
-            positioning_meta, price_return_20d,
+            positioning_meta,
+        )
+        analysis["positioning"] = (
+            calculate_positioning(*positioning_args, price_return_20d)
+            if POSITIONING_SUPPORTS_PRICE_20D
+            else calculate_positioning(*positioning_args)
         )
         st.session_state["analysis"]=analysis
         st.session_state.pop("search_matches",None)

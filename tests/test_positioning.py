@@ -1,4 +1,5 @@
 import json
+import inspect
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -18,6 +19,9 @@ def rows(margin=100.0, short=100.0, latest_margin=None, latest_short=None):
 
 
 class PositioningTests(unittest.TestCase):
+    def test_current_calculator_accepts_price_return_20d(self):
+        self.assertIn("price_return_20d", inspect.signature(calculate).parameters)
+
     def test_change_windows_and_percentages(self):
         item = calculate(rows(latest_margin=80, latest_short=120), .03, 1.3)
         self.assertEqual(item.margin_change_5d, -20)
