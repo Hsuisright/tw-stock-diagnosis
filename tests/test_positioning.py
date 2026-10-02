@@ -4,7 +4,7 @@ from tempfile import TemporaryDirectory
 import unittest
 
 from diagnosis.positioning import SEED_SCHEMA_VERSION, load_seed, normalize_finmind_positioning
-from diagnosis.positioning_rules import calculate
+from diagnosis.positioning_rules import VOLUME_CONFIRMATION_REQUIRED, calculate
 
 
 def rows(margin=100.0, short=100.0, latest_margin=None, latest_short=None):
@@ -51,12 +51,23 @@ class PositioningTests(unittest.TestCase):
         item = calculate(rows(latest_margin=90), -.04, 1.3)
         self.assertEqual(item.state, "LONG_DELEVERAGING_COMPATIBLE")
 
+    def test_volume_is_required_only_for_covering_and_deleveraging(self):
+        self.assertEqual(VOLUME_CONFIRMATION_REQUIRED, {
+            "SHORT_COVERING_COMPATIBLE", "LONG_DELEVERAGING_COMPATIBLE",
+        })
+        self.assertEqual(calculate(rows(latest_short=90), .04, 1.19).state, "NEUTRAL")
+        self.assertEqual(calculate(rows(latest_margin=90), -.04, 1.19).state, "NEUTRAL")
+        self.assertEqual(calculate(rows(latest_margin=110), .04, .80).state,
+                         "LONG_CROWDING_BUILDING")
+        self.assertEqual(calculate(rows(latest_short=110), -.04, .80).state,
+                         "SHORT_PRESSURE_BUILDING")
+
     def test_two_sided_crowding_rule(self):
         item = calculate(rows(latest_margin=110, latest_short=110), .04, 1.0)
         self.assertEqual(item.state, "TWO_SIDED_CROWDING")
 
     def test_short_pressure_building_rule(self):
-        self.assertEqual(calculate(rows(latest_short=110), -.04, 1.3).state,
+        self.assertEqual(calculate(rows(latest_short=110), -.04, .80).state,
                          "SHORT_PRESSURE_BUILDING")
 
     def test_long_crowding_building_rule(self):
@@ -66,6 +77,16 @@ class PositioningTests(unittest.TestCase):
     def test_pressure_releasing_rule(self):
         self.assertEqual(calculate(rows(latest_margin=90, latest_short=90), .0, 1.0).state,
                          "PRESSURE_RELEASING")
+
+    def test_precedence_is_stable_when_multiple_conditions_match(self):
+        # Short covering takes precedence over long crowding when price rises,
+        # short balance falls, and margin balance rises at the same time.
+        self.assertEqual(calculate(rows(latest_margin=110, latest_short=90), .04, 1.3).state,
+                         "SHORT_COVERING_COMPATIBLE")
+        # Long deleveraging takes precedence over short pressure when price
+        # falls while margin falls and short balance rises together.
+        self.assertEqual(calculate(rows(latest_margin=90, latest_short=110), -.04, 1.3).state,
+                         "LONG_DELEVERAGING_COMPATIBLE")
 
     def test_price_20d_is_retained(self):
         item = calculate(rows(), .01, 1.0, price_return_20d=.12)

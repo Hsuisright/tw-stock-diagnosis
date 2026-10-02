@@ -15,6 +15,19 @@ BALANCE_CHANGE_5D = 0.05
 VOLUME_EXPANSION = 1.20
 REQUIRED_OBSERVATIONS = 6
 
+# Volume confirmation is part of the published rule specification only for
+# these two states.  The remaining states describe position/price structure
+# and intentionally do not require expanded volume.
+VOLUME_CONFIRMATION_REQUIRED = frozenset({
+    "SHORT_COVERING_COMPATIBLE",
+    "LONG_DELEVERAGING_COMPATIBLE",
+})
+
+# State precedence is intentional, deterministic, and tested.  A snapshot
+# meeting more than one condition uses the first compatible state below:
+# short covering -> long deleveraging -> two-sided crowding -> long crowding
+# -> short pressure -> pressure releasing -> neutral.
+
 STATE_LABELS = {
     "NEUTRAL": "無明確籌碼壓力",
     "SHORT_PRESSURE_BUILDING": "空方壓力累積",
@@ -95,6 +108,9 @@ def calculate(rows: list[dict], price_return_5d: float | None, volume_ratio: flo
             f"5日融券餘額 {_fmt(short_5d[1])}",
         ]
         expanded_volume = volume_ratio >= VOLUME_EXPANSION
+        # Keep this ordering aligned with the precedence specification above.
+        # Only SHORT_COVERING_COMPATIBLE and LONG_DELEVERAGING_COMPATIBLE use
+        # expanded_volume as a required confirmation condition.
         if price_return_5d >= PRICE_DIRECTION_5D and expanded_volume and short_5d[1] <= -BALANCE_CHANGE_5D:
             state = "SHORT_COVERING_COMPATIBLE"
             evidence = [common_evidence[0], common_evidence[3], common_evidence[1],
