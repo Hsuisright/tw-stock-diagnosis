@@ -16,6 +16,10 @@ def main():
         for rows, twse_ok, tpex_ok in pool.map(fetch_day, required_dates(existing, 70)):
             fetched.extend(rows); complete = complete and twse_ok and tpex_ok
     merged = validate([*existing, *fetched])
+    # A rolling public cache: enough observations for 20D evidence plus a
+    # holiday buffer, without accumulating a permanent historical dataset.
+    keep_dates = set(sorted({row["date"] for row in merged})[-70:])
+    merged = [row for row in merged if row["date"] in keep_dates]
     save(OUT, merged)
     print(f"rows={len(merged)} fetched={len(fetched)} official_complete={complete}")
 
