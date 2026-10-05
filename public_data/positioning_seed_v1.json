@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-02T15:48:15.292306+00:00",
+  "generated_at": "2026-10-05T18:26:38.179666+00:00",
   "source": "FinMind:TaiwanStockMarginPurchaseShortSale",
   "dataset": "TaiwanStockMarginPurchaseShortSale",
   "start_date": "2024-01-01",
-  "version": "eacc40e491f62579443d8cfc69db87c158fbec8fef1dfc07830fe7e7a7ba6ce3",
+  "version": "9354d98ca6061364d914f86d363bc3b74c8668302254ba7aeca0015a32ef150a",
   "tickers": {
     "2330": [
       {
@@ -7996,6 +7996,18 @@
         "margin_sell": 387.0,
         "margin_cash_repayment": 36.0,
         "short_sell": 0.0,
+        "short_buy": 2.0,
+        "short_cash_repayment": 0.0
+      },
+      {
+        "ticker": "2330",
+        "date": "2026-10-05",
+        "margin_balance": 30135.0,
+        "short_balance": 46.0,
+        "margin_buy": 1381.0,
+        "margin_sell": 2172.0,
+        "margin_cash_repayment": 13.0,
+        "short_sell": 30.0,
         "short_buy": 2.0,
         "short_cash_repayment": 0.0
       }
@@ -15992,6 +16004,18 @@
         "short_sell": 5.0,
         "short_buy": 4.0,
         "short_cash_repayment": 0.0
+      },
+      {
+        "ticker": "2454",
+        "date": "2026-10-05",
+        "margin_balance": 10960.0,
+        "short_balance": 58.0,
+        "margin_buy": 675.0,
+        "margin_sell": 573.0,
+        "margin_cash_repayment": 6.0,
+        "short_sell": 15.0,
+        "short_buy": 5.0,
+        "short_cash_repayment": 0.0
       }
     ],
     "2345": [
@@ -23986,6 +24010,18 @@
         "short_sell": 0.0,
         "short_buy": 0.0,
         "short_cash_repayment": 0.0
+      },
+      {
+        "ticker": "2345",
+        "date": "2026-10-05",
+        "margin_balance": 4797.0,
+        "short_balance": 19.0,
+        "margin_buy": 1138.0,
+        "margin_sell": 491.0,
+        "margin_cash_repayment": 1.0,
+        "short_sell": 9.0,
+        "short_buy": 0.0,
+        "short_cash_repayment": 0.0
       }
     ],
     "2412": [
@@ -31977,6 +32013,18 @@
         "margin_buy": 74.0,
         "margin_sell": 9.0,
         "margin_cash_repayment": 0.0,
+        "short_sell": 0.0,
+        "short_buy": 0.0,
+        "short_cash_repayment": 0.0
+      },
+      {
+        "ticker": "2412",
+        "date": "2026-10-05",
+        "margin_balance": 1799.0,
+        "short_balance": 28.0,
+        "margin_buy": 15.0,
+        "margin_sell": 3.0,
+        "margin_cash_repayment": 1.0,
         "short_sell": 0.0,
         "short_buy": 0.0,
         "short_cash_repayment": 0.0
