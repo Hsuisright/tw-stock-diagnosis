@@ -1,0 +1,20 @@
+{
+  "NotoSansTC-variable.ttf": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanstc/NotoSansTC%5Bwght%5D.ttf",
+    "sha256": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
+    "bytes": 11941968
+  },
+  "OFL.txt": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanstc/OFL.txt",
+    "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+    "bytes": 4388
+  },
+  "V16ReportTC-Regular.ttf": {
+    "sha256": "9ce0a8ef5d43323453b6e5bbb0aa4a28893273795253f6a2bb073ae1f182f362",
+    "bytes": 7149148,
+    "derived_from": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
+    "weight": 400,
+    "license": "SIL Open Font License 1.1",
+    "transformation": "fontTools static instance; primary names renamed to V16 Report TC"
+  }
+}

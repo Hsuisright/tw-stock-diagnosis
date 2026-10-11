@@ -144,3 +144,5 @@ def render_reversal(result):
                                        相對強弱=x.relative_score,結構=x.structure_score,型態=x.pattern_score)
                                   for x in history]),hide_index=True,width="stretch")
         st.caption("依目前下載資料逐日重算；使用各日之前可取得的價格，不是當時保存的實盤紀錄，也不是已驗證勝率。")
+    # Export the exact figures already displayed; do not recompute indicators.
+    return fig, graph

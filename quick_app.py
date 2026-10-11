@@ -189,7 +189,7 @@ if result:
     # and is not part of the deployed module contract.
     render_price_temperature(result)
     render_positioning(result.get("positioning") or calculate_positioning([], None, None, None))
-    render_reversal(result)
+    pdf_figures = render_reversal(result)
     interpretation=build_interpretation(result)
     st.subheader("綜合判讀")
     st.info(interpretation["overall"])
@@ -197,6 +197,8 @@ if result:
     st.markdown(f'**中期觀察：** {interpretation["medium_term"]}')
     st.markdown(f'**長期考量：** {interpretation["long_term"]}')
     st.caption("以上內容由固定規則依公開數據產生，用於整理觀察重點，不構成買賣建議。")
+    from diagnosis.v15_pdf import render_download
+    render_download(result, interpretation, pdf_figures)
     matrix=build_opportunity_risk(result)
     st.subheader("機會—風險矩陣")
     m1,m2,m3,m4=st.columns(4)

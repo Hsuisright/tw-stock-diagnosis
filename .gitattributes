@@ -1,0 +1,3 @@
+# Preserve licensed asset bytes for SHA256 verification on every platform.
+assets/v15_pdf_fonts/OFL.txt -text -whitespace
+assets/v15_pdf_fonts/*.ttf binary
