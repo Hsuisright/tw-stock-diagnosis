@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-13T17:11:38.982936+00:00",
+  "generated_at": "2026-11-16T19:35:16.875264+00:00",
   "source": "FinMind public datasets",
   "tickers": {
     "2330": {
@@ -1248,6 +1248,13 @@
           "type": "EPS",
           "date": "2026-06-30",
           "value": 15.28,
+          "origin_name": "基本每股盈餘"
+        },
+        {
+          "stock_id": "2454",
+          "type": "EPS",
+          "date": "2026-09-30",
+          "value": 17.5,
           "origin_name": "基本每股盈餘"
         }
       ],
@@ -2555,5 +2562,5 @@
       ]
     }
   },
-  "version": "3bb937681c7e5cfaefe1672d78c9cbb04284a02e6896bc221006a0c49625fa78"
+  "version": "e81e1a3f557c4b20168c5b666a6c736a8dee825921abebe5a5f8efc332ad45c1"
 }
